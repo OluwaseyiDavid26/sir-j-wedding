@@ -230,7 +230,6 @@
 //     </>
 //   );
 // }
-
 "use client";
 import Image from "next/image";
 
@@ -315,13 +314,22 @@ export default function Hero() {
         .hero-btn-gold:hover {
           background: #e8c84a;
         }
+
+        .scroll-indicator {
+          animation: bounce 2s ease infinite;
+        }
+
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); opacity: 0.5; }
+          50%       { transform: translateY(8px); opacity: 1; }
+        }
       `}</style>
 
       <section
         id="home"
-        className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6"
+        className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 pb-32"
       >
-        {/* ── Background Image ── */}
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
             src="/tt28.jpg"
@@ -332,7 +340,7 @@ export default function Hero() {
           />
         </div>
 
-        {/* ── Overlay — matches OrderOfProgram gradient palette ── */}
+        {/* Overlay */}
         <div
           className="absolute inset-0 z-10"
           style={{
@@ -341,12 +349,12 @@ export default function Hero() {
               rgba(10, 5, 20, 0.55) 0%,
               rgba(16, 8, 32, 0.40) 35%,
               rgba(13, 6, 24, 0.55) 65%,
-              rgba(8, 3, 16, 0.88) 100%
+              rgba(8, 3, 16, 0.92) 100%
             )`,
           }}
         />
 
-        {/* ── Ambient glow blobs — mirrors OrderOfProgram exactly ── */}
+        {/* Ambient glow blobs */}
         <div
           className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none z-10"
           style={{
@@ -362,7 +370,7 @@ export default function Hero() {
           }}
         />
 
-        {/* ── Floating Petals ── */}
+        {/* Floating Petals */}
         {[
           { left: "6%", size: 14, dur: "9s", delay: "0s", color: "#e8d5ff" },
           { left: "18%", size: 9, dur: "13s", delay: "2s", color: "#D4AF37" },
@@ -388,9 +396,9 @@ export default function Hero() {
           />
         ))}
 
-        {/* ── Content ── */}
+        {/* Content */}
         <div className="relative z-30 flex flex-col items-center text-center w-full max-w-4xl pt-20">
-          {/* Family intro — matches OrderOfProgram's 0.6rem / tracking-[0.5em] eyebrow style */}
+          {/* Family intro */}
           <div className="fade-up-1 flex flex-col items-center gap-1.5 mb-8">
             <p
               className="font-jost text-[0.6rem] tracking-[0.5em] uppercase font-light"
@@ -406,7 +414,7 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Wedding Solemnization — uses same ornament as OrderOfProgram header */}
+          {/* Wedding Solemnization */}
           <div className="fade-up-2 flex flex-col items-center mb-8">
             <div className="flex items-center gap-4 mb-3">
               <div
@@ -484,7 +492,7 @@ export default function Hero() {
             </h1>
           </div>
 
-          {/* Gold divider — identical triple-diamond to OrderOfProgram footer */}
+          {/* Gold divider */}
           <div className="fade-up-4 flex items-center gap-5 my-8">
             <div
               className="h-px w-20"
@@ -517,7 +525,7 @@ export default function Hero() {
           </div>
 
           {/* Date + venue + CTAs */}
-          <div className="fade-up-5 flex flex-col items-center gap-2">
+          <div className="fade-up-5 flex flex-col items-center gap-3">
             <p className="font-jost text-sm tracking-[0.3em] uppercase font-semibold text-white">
               21st March 2026 &nbsp;·&nbsp; 11:00 AM
             </p>
@@ -528,31 +536,32 @@ export default function Hero() {
               First Baptist Church, Okedogbon, Owo, Ondo State
             </p>
 
-            <div className="mt-7 flex gap-4 flex-wrap justify-center items-center">
-              {/* Colours badge — repositioned inline with CTAs */}
+            {/* Colours badge */}
+            <div
+              className="flex items-center gap-2.5 px-4 py-3 mt-2 border"
+              style={{ borderColor: "rgba(212,175,55,0.25)" }}
+            >
               <div
-                className="flex items-center gap-2.5 px-4 py-3 border"
-                style={{ borderColor: "rgba(212,175,55,0.25)" }}
+                className="w-2.5 h-2.5 rounded-full"
+                style={{ background: "#C4B7D7" }}
+              />
+              <p
+                className="font-jost text-[0.6rem] tracking-[0.25em] uppercase font-light"
+                style={{ color: "rgba(255,255,255,0.5)" }}
               >
-                <div
-                  className="w-2.5 h-2.5 rounded-full"
-                  style={{ background: "#C4B7D7" }}
-                />
-                <p
-                  className="font-jost text-[0.6rem] tracking-[0.25em] uppercase font-light"
-                  style={{ color: "rgba(255,255,255,0.5)" }}
-                >
-                  Colours of the Day:&nbsp;
-                  <span style={{ color: "rgba(255,255,255,0.75)" }}>
-                    Lavender &amp; Gold
-                  </span>
-                </p>
-                <div
-                  className="w-2.5 h-2.5 rounded-full"
-                  style={{ background: "#D4AF37" }}
-                />
-              </div>
+                Colours of the Day:&nbsp;
+                <span style={{ color: "rgba(255,255,255,0.75)" }}>
+                  Lavender &amp; Gold
+                </span>
+              </p>
+              <div
+                className="w-2.5 h-2.5 rounded-full"
+                style={{ background: "#D4AF37" }}
+              />
+            </div>
 
+            {/* CTA Buttons */}
+            <div className="flex gap-4 flex-wrap justify-center items-center mt-4 mb-8">
               <a href="#program" className="hero-btn-outline">
                 View Programme
               </a>
@@ -561,6 +570,23 @@ export default function Hero() {
               </a>
             </div>
           </div>
+        </div>
+
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 z-30 flex flex-col items-center gap-2 scroll-indicator">
+          <p
+            className="font-jost text-[0.55rem] tracking-[0.35em] uppercase"
+            style={{ color: "rgba(255,255,255,0.3)" }}
+          >
+            Scroll
+          </p>
+          <div
+            className="w-px h-8"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(212,175,55,0.6), transparent)",
+            }}
+          />
         </div>
       </section>
     </>
