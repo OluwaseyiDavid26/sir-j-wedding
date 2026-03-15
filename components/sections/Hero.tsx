@@ -573,21 +573,6 @@ export default function Hero() {
         </div>
 
         {/* Scroll indicator */}
-        <div className="absolute bottom-8 z-30 flex flex-col items-center gap-2 scroll-indicator">
-          <p
-            className="font-jost text-[0.55rem] tracking-[0.35em] uppercase"
-            style={{ color: "rgba(255,255,255,0.3)" }}
-          >
-            Scroll
-          </p>
-          <div
-            className="w-px h-8"
-            style={{
-              background:
-                "linear-gradient(to bottom, rgba(212,175,55,0.6), transparent)",
-            }}
-          />
-        </div>
       </section>
     </>
   );
