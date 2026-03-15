@@ -6,42 +6,99 @@ const hymns = [
     id: "processional",
     label: "Processional Hymn",
     tag: "Opening",
-    title: "Great Is Thy Faithfulness",
+    title: "Itan Iyanu T'ife",
     verses: [
       {
         label: "Verse 1",
         lines: [
-          "Great is Thy faithfulness, O God my Father,",
-          "There is no shadow of turning with Thee;",
-          "Thou changest not, Thy compassions, they fail not",
-          "As Thou hast been, Thou forever will be.",
+          "Itan iyanu t'ife ! So fun mi l'ekan si",
+          "Itan iyanu t'ife E gbe orin na ga !",
+          "Awon angeli nroyin re Awon oluso si gbagbo",
+          "Elese, iwo ki yo gbo Itan iyanu t'ife",
         ],
       },
       {
         label: "Chorus",
-        lines: [
-          "Great is Thy faithfulness! Great is Thy faithfulness!",
-          "Morning by morning new mercies I see;",
-          "All I have needed Thy hand hath provided,",
-          "Great is Thy faithfulness, Lord, unto me!",
-        ],
+        lines: ["Iyanu ! Iyanu ! Iyanu !", "Itan iyanu t'ife"],
       },
       {
         label: "Verse 2",
         lines: [
-          "Summer and winter and springtime and harvest,",
-          "Sun, moon and stars in their courses above",
-          "Join with all nature in manifold witness",
-          "To Thy great faithfulness, mercy and love.",
+          "Itan iyanu t'ife B'iwo tile sako",
+          "Itan iyanu t'ife Sibe o npe loni",
+          "Lat'ori oke kalfari Lati orisun didun ni",
+          "Lati isedale aye Itan iyanu t'ife",
         ],
       },
       {
         label: "Verse 3",
         lines: [
-          "Pardon for sin and a peace that endureth,",
-          "Thine own dear presence to cheer and to guide;",
-          "Strength for today and bright hope for tomorrow,",
-          "Blessings all mine, with ten thousand beside!",
+          "Itan iyanu t'ife Jesu ni isimi",
+          "Itan iyanu t'ife Fun awon oloto",
+          "To sun ni ile nla orun Pel'awon to saju wa lo",
+          "Won nko orin ayo orun Itan iyanu t'ife. Amin.",
+        ],
+      },
+    ],
+  },
+  {
+    id: "gospel",
+    label: "Gospel Hymn",
+    tag: "Worship",
+    title: "Be Glad in the Lord",
+    verses: [
+      {
+        label: "Verse 1",
+        lines: [
+          "Be glad in the Lord, and rejoice,",
+          "All ye that are upright in heart,",
+          "And ye that have made him your choice",
+          "Bid sadness and sorrow depart.",
+        ],
+      },
+      {
+        label: "Chorus",
+        lines: [
+          "Rejoice! Rejoice!",
+          "Rejoice in the Lord and rejoice,",
+          "Rejoice! Rejoice!",
+          "Rejoice in the Lord rejoice.",
+        ],
+      },
+      {
+        label: "Verse 2",
+        lines: [
+          "Be joyful, for He is the Lord,",
+          "On earth and in heaven supreme;",
+          "He fashions and rules by His word;",
+          "The 'Mighty' and 'Strong' to redeem.",
+        ],
+      },
+      {
+        label: "Verse 3",
+        lines: [
+          "What though in the conflict for right",
+          "Your enemies almost prevail!",
+          "God's armies, just hid from your sight,",
+          "Are more than the foes which assail.",
+        ],
+      },
+      {
+        label: "Verse 4",
+        lines: [
+          "Though darkness surround you by day,",
+          "Your sky by the night be o'er cast",
+          "Let nothing your spirit dismay,",
+          "But trust till the danger is past.",
+        ],
+      },
+      {
+        label: "Verse 5",
+        lines: [
+          "Be glad in the Lord and rejoice,",
+          "His praise proclaiming in song;",
+          "With harp, and with organ, and voice,",
+          "The loud hallelujahs prolong! Amen.",
         ],
       },
     ],
@@ -50,44 +107,53 @@ const hymns = [
     id: "recessional",
     label: "Recessional Hymn",
     tag: "Closing",
-    title: "To God Be the Glory",
+    title: "Wonderful Story of Love",
     verses: [
       {
         label: "Verse 1",
         lines: [
-          "To God be the glory, great things He hath taught us,",
-          "Great things He hath done, and great our rejoicing",
-          "Through Jesus the Son; but purer, and higher,",
-          "And greater will be our wonder, our transport, when Jesus we see.",
+          "Wonderful story of love!",
+          "Tell it to me again;",
+          "Wonderful story of love!",
+          "Wake the immortal strain.",
+          "Angels with rapture announce it,",
+          "Shepherds with wonder receive it;",
+          "Sinner, O won't you believe it?",
+          "Wonderful story of love!",
         ],
       },
       {
-        label: "Chorus",
+        label: "Refrain",
         lines: [
-          "Praise the Lord, praise the Lord,",
-          "Let the earth hear His voice!",
-          "Praise the Lord, praise the Lord,",
-          "Let the people rejoice!",
-          "O come to the Father, through Jesus the Son,",
-          "And give Him the glory, great things He hath done.",
+          "Wonderful! Wonderful!",
+          "Wonderful story,",
+          "Wonderful story of love!",
         ],
       },
       {
         label: "Verse 2",
         lines: [
-          "O perfect redemption, the purchase of blood,",
-          "To every believer the promise of God;",
-          "The vilest offender who truly believes,",
-          "That moment from Jesus a pardon receives.",
+          "Wonderful story of love!",
+          "Though you are far away;",
+          "Wonderful story of love!",
+          "Still he doth call today.",
+          "Calling from Calvary's mountain,",
+          "Down from the crystal bright fountain,",
+          "E'en from the dawn of creation;",
+          "Wonderful story of love!",
         ],
       },
       {
         label: "Verse 3",
         lines: [
-          "Great things He hath taught us, great things He hath done,",
-          "And great our rejoicing through Jesus the Son;",
-          "But purer, and higher, and greater will be",
-          "Our wonder, our transport, when Jesus we see.",
+          "Wonderful story of love!",
+          "Jesus provides a rest;",
+          "Wonderful story of love!",
+          "For all the pure and blest;",
+          "Rest in those mansions above us,",
+          "With those who've gone on before us,",
+          "Singing the rapturous chorus;",
+          "Wonderful story of love!",
         ],
       },
     ],
@@ -110,10 +176,10 @@ function useInView(threshold = 0.2) {
   return { ref, inView };
 }
 
+type HymnId = "processional" | "gospel" | "recessional";
+
 export default function Hymns() {
-  const [active, setActive] = useState<"processional" | "recessional">(
-    "processional",
-  );
+  const [active, setActive] = useState<HymnId>("processional");
   const { ref: headerRef, inView: headerIn } = useInView(0.3);
   const activeHymn = hymns.find((h) => h.id === active)!;
 
@@ -135,7 +201,8 @@ export default function Hymns() {
         id="hymns"
         className="relative py-28 px-6 overflow-hidden"
         style={{
-          background: `linear-gradient(to bottom, #080310 0%, #0d0618 50%, #080310 100%)`,
+          background:
+            "linear-gradient(to bottom, #080310 0%, #0d0618 50%, #080310 100%)",
         }}
       >
         {/* Ambient glows */}
@@ -206,24 +273,25 @@ export default function Hymns() {
               className="font-jost text-[0.62rem] tracking-[0.3em] uppercase mt-4"
               style={{ color: "rgba(255,255,255,0.3)" }}
             >
-              Processional & Recessional
+              Processional · Gospel · Recessional
             </p>
           </div>
 
-          {/* Tab Switcher */}
+          {/* 3-Tab Switcher */}
           <div className="flex items-center justify-center mb-12">
             <div
-              className="flex relative border rounded-sm overflow-hidden"
-              style={{ borderColor: "rgba(212,175,55,0.2)" }}
+              className="flex relative overflow-hidden"
+              style={{
+                border: "1px solid rgba(212,175,55,0.2)",
+                borderRadius: "2px",
+              }}
             >
-              {hymns.map((h) => (
+              {hymns.map((h, i) => (
                 <button
                   key={h.id}
-                  onClick={() =>
-                    setActive(h.id as "processional" | "recessional")
-                  }
-                  className="relative font-jost text-[0.65rem] tracking-[0.2em] uppercase px-8 py-3
-                    transition-all duration-400 cursor-pointer border-none outline-none"
+                  onClick={() => setActive(h.id as HymnId)}
+                  className="relative font-jost text-[0.6rem] tracking-[0.18em] uppercase px-6 py-3
+                    transition-all duration-300 cursor-pointer border-none outline-none"
                   style={{
                     background:
                       active === h.id
@@ -232,12 +300,12 @@ export default function Hymns() {
                     color:
                       active === h.id ? "#D4AF37" : "rgba(255,255,255,0.35)",
                     borderRight:
-                      h.id === "processional"
+                      i < hymns.length - 1
                         ? "1px solid rgba(212,175,55,0.2)"
                         : "none",
                   }}
                 >
-                  {/* Active indicator */}
+                  {/* Active bottom line */}
                   {active === h.id && (
                     <span
                       className="absolute bottom-0 left-0 right-0 h-px"
@@ -247,8 +315,9 @@ export default function Hymns() {
                       }}
                     />
                   )}
+                  {/* Tag */}
                   <span
-                    className="block text-[0.55rem] tracking-[0.3em] mb-0.5"
+                    className="block text-[0.5rem] tracking-[0.3em] mb-0.5"
                     style={{
                       color:
                         active === h.id
@@ -301,53 +370,53 @@ export default function Hymns() {
 
             {/* Verses */}
             <div className="flex flex-col gap-8">
-              {activeHymn.verses.map((verse, vi) => (
-                <div
-                  key={vi}
-                  className="relative pl-6"
-                  style={{
-                    borderLeft:
-                      verse.label === "Chorus"
+              {activeHymn.verses.map((verse, vi) => {
+                const isChorus =
+                  verse.label === "Chorus" || verse.label === "Refrain";
+                return (
+                  <div
+                    key={vi}
+                    className="relative pl-6"
+                    style={{
+                      borderLeft: isChorus
                         ? "1px solid rgba(212,175,55,0.3)"
                         : "1px solid rgba(255,255,255,0.07)",
-                    opacity: 0,
-                    animation: `fadeSlide 0.5s ease forwards ${vi * 120}ms`,
-                  }}
-                >
-                  {/* Verse label */}
-                  <p
-                    className="font-jost text-[0.58rem] tracking-[0.35em] uppercase mb-3"
-                    style={{
-                      color:
-                        verse.label === "Chorus"
-                          ? "rgba(212,175,55,0.7)"
-                          : "rgba(255,255,255,0.25)",
+                      opacity: 0,
+                      animation: `fadeSlide 0.5s ease forwards ${vi * 120}ms`,
                     }}
                   >
-                    {verse.label}
-                  </p>
-
-                  {/* Lines */}
-                  {verse.lines.map((line, li) => (
+                    {/* Verse label */}
                     <p
-                      key={li}
-                      className="font-cormorant leading-relaxed"
+                      className="font-jost text-[0.58rem] tracking-[0.35em] uppercase mb-3"
                       style={{
-                        fontSize: "clamp(1rem, 2vw, 1.15rem)",
-                        color:
-                          verse.label === "Chorus"
-                            ? "rgba(255,255,255,0.9)"
-                            : "rgba(255,255,255,0.65)",
-                        fontStyle:
-                          verse.label === "Chorus" ? "italic" : "normal",
-                        fontWeight: verse.label === "Chorus" ? 400 : 300,
+                        color: isChorus
+                          ? "rgba(212,175,55,0.7)"
+                          : "rgba(255,255,255,0.25)",
                       }}
                     >
-                      {line}
+                      {verse.label}
                     </p>
-                  ))}
-                </div>
-              ))}
+
+                    {/* Lines */}
+                    {verse.lines.map((line, li) => (
+                      <p
+                        key={li}
+                        className="font-cormorant leading-relaxed"
+                        style={{
+                          fontSize: "clamp(1rem, 2vw, 1.15rem)",
+                          color: isChorus
+                            ? "rgba(255,255,255,0.9)"
+                            : "rgba(255,255,255,0.65)",
+                          fontStyle: isChorus ? "italic" : "normal",
+                          fontWeight: isChorus ? 400 : 300,
+                        }}
+                      >
+                        {line}
+                      </p>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
