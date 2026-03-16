@@ -230,6 +230,355 @@
 //     </>
 //   );
 // }
+
+// "use client";
+// import Image from "next/image";
+
+// export default function Hero() {
+//   return (
+//     <>
+//       <style>{`
+//         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap');
+//         .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+//         .font-jost { font-family: 'Jost', sans-serif; }
+
+//         .petal {
+//           position: absolute;
+//           border-radius: 50% 10% 50% 10%;
+//           animation: drift linear infinite;
+//           pointer-events: none;
+//         }
+
+//         @keyframes drift {
+//           0%   { transform: translateY(-60px) rotate(0deg); opacity: 0; }
+//           10%  { opacity: 0.25; }
+//           90%  { opacity: 0.12; }
+//           100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+//         }
+
+//         @keyframes fadeUp {
+//           from { opacity: 0; transform: translateY(24px); }
+//           to   { opacity: 1; transform: translateY(0); }
+//         }
+
+//         .fade-up-1 { animation: fadeUp 1s ease forwards 0.2s; opacity: 0; }
+//         .fade-up-2 { animation: fadeUp 1s ease forwards 0.5s; opacity: 0; }
+//         .fade-up-3 { animation: fadeUp 1s ease forwards 0.8s; opacity: 0; }
+//         .fade-up-4 { animation: fadeUp 1s ease forwards 1.1s; opacity: 0; }
+//         .fade-up-5 { animation: fadeUp 1s ease forwards 1.4s; opacity: 0; }
+
+//         .gold-line {
+//           background: linear-gradient(to right, transparent, #D4AF37, transparent);
+//         }
+
+//         .ampersand-glow {
+//           text-shadow: 0 0 40px rgba(212,175,55,0.8), 0 0 80px rgba(212,175,55,0.4);
+//         }
+
+//         .name-shadow {
+//           text-shadow: 0 2px 20px rgba(0,0,0,0.5), 0 0 60px rgba(0,0,0,0.3);
+//         }
+
+//         .hero-btn-outline {
+//           font-family: 'Jost', sans-serif;
+//           font-size: 0.65rem;
+//           letter-spacing: 0.2em;
+//           text-transform: uppercase;
+//           font-weight: 500;
+//           border: 1px solid rgba(255,255,255,0.4);
+//           color: #fff;
+//           padding: 12px 28px;
+//           background: transparent;
+//           text-decoration: none;
+//           display: inline-block;
+//           transition: background 0.3s, border-color 0.3s, color 0.3s;
+//         }
+//         .hero-btn-outline:hover {
+//           background: rgba(255,255,255,0.08);
+//           border-color: rgba(255,255,255,0.7);
+//         }
+
+//         .hero-btn-gold {
+//           font-family: 'Jost', sans-serif;
+//           font-size: 0.65rem;
+//           letter-spacing: 0.2em;
+//           text-transform: uppercase;
+//           font-weight: 600;
+//           background: #D4AF37;
+//           color: #0a0514;
+//           padding: 12px 28px;
+//           text-decoration: none;
+//           display: inline-block;
+//           transition: background 0.3s;
+//           box-shadow: 0 4px 20px rgba(212,175,55,0.3);
+//         }
+//         .hero-btn-gold:hover {
+//           background: #e8c84a;
+//         }
+
+//         .scroll-indicator {
+//           animation: bounce 2s ease infinite;
+//         }
+
+//         @keyframes bounce {
+//           0%, 100% { transform: translateY(0); opacity: 0.5; }
+//           50%       { transform: translateY(8px); opacity: 1; }
+//         }
+//       `}</style>
+
+//       <section
+//         id="home"
+//         className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-6 pb-32"
+//       >
+//         {/* Background Image */}
+//         <div className="absolute inset-0 z-0">
+//           <Image
+//             src="/tt28.jpg"
+//             alt="Oluwatosin & Jesutomi"
+//             fill
+//             priority
+//             className="object-cover object-top"
+//           />
+//         </div>
+
+//         {/* Overlay */}
+//         <div
+//           className="absolute inset-0 z-10"
+//           style={{
+//             background: `linear-gradient(
+//               to bottom,
+//               rgba(10, 5, 20, 0.55) 0%,
+//               rgba(16, 8, 32, 0.40) 35%,
+//               rgba(13, 6, 24, 0.55) 65%,
+//               rgba(8, 3, 16, 0.92) 100%
+//             )`,
+//           }}
+//         />
+
+//         {/* Ambient glow blobs */}
+//         <div
+//           className="absolute top-0 left-1/4 w-[500px] h-[500px] rounded-full pointer-events-none z-10"
+//           style={{
+//             background:
+//               "radial-gradient(circle, rgba(107,63,160,0.15) 0%, transparent 70%)",
+//           }}
+//         />
+//         <div
+//           className="absolute bottom-0 right-1/4 w-[400px] h-[400px] rounded-full pointer-events-none z-10"
+//           style={{
+//             background:
+//               "radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%)",
+//           }}
+//         />
+
+//         {/* Floating Petals */}
+//         {[
+//           { left: "6%", size: 14, dur: "9s", delay: "0s", color: "#e8d5ff" },
+//           { left: "18%", size: 9, dur: "13s", delay: "2s", color: "#D4AF37" },
+//           { left: "32%", size: 18, dur: "11s", delay: "4s", color: "#d4b8f0" },
+//           { left: "50%", size: 10, dur: "15s", delay: "1s", color: "#D4AF37" },
+//           { left: "65%", size: 16, dur: "10s", delay: "3s", color: "#e8d5ff" },
+//           { left: "78%", size: 12, dur: "14s", delay: "5s", color: "#d4b8f0" },
+//           { left: "90%", size: 8, dur: "12s", delay: "0.5s", color: "#D4AF37" },
+//           { left: "42%", size: 11, dur: "16s", delay: "6s", color: "#e8d5ff" },
+//         ].map((p, i) => (
+//           <div
+//             key={i}
+//             className="petal z-20"
+//             style={{
+//               left: p.left,
+//               top: "-40px",
+//               width: p.size,
+//               height: p.size,
+//               background: p.color,
+//               animationDuration: p.dur,
+//               animationDelay: p.delay,
+//             }}
+//           />
+//         ))}
+
+//         {/* Content */}
+//         <div className="relative z-30 flex flex-col items-center text-center w-full max-w-4xl pt-20">
+//           {/* Family intro */}
+//           <div className="fade-up-1 flex flex-col items-center gap-1.5 mb-8">
+//             <p
+//               className="font-jost text-[0.6rem] tracking-[0.5em] uppercase font-light"
+//               style={{ color: "rgba(212,175,55,0.7)" }}
+//             >
+//               The Families of Adeleke &amp; Ayanda
+//             </p>
+//             <p
+//               className="font-jost text-[0.6rem] tracking-[0.45em] uppercase font-light"
+//               style={{ color: "rgba(255,255,255,0.45)" }}
+//             >
+//               Cordially invite you to the
+//             </p>
+//           </div>
+
+//           {/* Wedding Solemnization */}
+//           <div className="fade-up-2 flex flex-col items-center mb-8">
+//             <div className="flex items-center gap-4 mb-3">
+//               <div
+//                 className="h-px w-16"
+//                 style={{
+//                   background:
+//                     "linear-gradient(to right, transparent, rgba(212,175,55,0.6))",
+//                 }}
+//               />
+//               <div
+//                 className="w-1.5 h-1.5 rotate-45"
+//                 style={{ background: "#D4AF37" }}
+//               />
+//               <div
+//                 className="h-px w-16"
+//                 style={{
+//                   background:
+//                     "linear-gradient(to left, transparent, rgba(212,175,55,0.6))",
+//                 }}
+//               />
+//             </div>
+//             <p
+//               className="font-cormorant italic font-light tracking-[0.2em]"
+//               style={{
+//                 fontSize: "clamp(1rem, 2vw, 1.2rem)",
+//                 color: "rgba(212,175,55,0.85)",
+//               }}
+//             >
+//               Wedding Solemnization
+//             </p>
+//             <div className="flex items-center gap-4 mt-3">
+//               <div
+//                 className="h-px w-16"
+//                 style={{
+//                   background:
+//                     "linear-gradient(to right, transparent, rgba(212,175,55,0.6))",
+//                 }}
+//               />
+//               <div
+//                 className="w-1.5 h-1.5 rotate-45"
+//                 style={{ background: "#D4AF37" }}
+//               />
+//               <div
+//                 className="h-px w-16"
+//                 style={{
+//                   background:
+//                     "linear-gradient(to left, transparent, rgba(212,175,55,0.6))",
+//                 }}
+//               />
+//             </div>
+//           </div>
+
+//           {/* Names */}
+//           <div className="fade-up-3 flex flex-col items-center">
+//             <h1
+//               className="font-cormorant italic font-light text-white name-shadow leading-[0.9]"
+//               style={{ fontSize: "clamp(3.5rem, 10vw, 7.5rem)" }}
+//             >
+//               Oluwatosin
+//             </h1>
+//             <span
+//               className="font-cormorant italic font-light ampersand-glow leading-none my-2"
+//               style={{
+//                 fontSize: "clamp(4.5rem, 12vw, 9.5rem)",
+//                 color: "#D4AF37",
+//               }}
+//             >
+//               &amp;
+//             </span>
+//             <h1
+//               className="font-cormorant italic font-light text-white name-shadow leading-[0.9]"
+//               style={{ fontSize: "clamp(3.5rem, 10vw, 7.5rem)" }}
+//             >
+//               Jesutomi
+//             </h1>
+//           </div>
+
+//           {/* Gold divider */}
+//           <div className="fade-up-4 flex items-center gap-5 my-8">
+//             <div
+//               className="h-px w-20"
+//               style={{
+//                 background:
+//                   "linear-gradient(to right, transparent, rgba(212,175,55,0.5))",
+//               }}
+//             />
+//             <div className="flex gap-2 items-center">
+//               <div
+//                 className="w-1 h-1 rotate-45"
+//                 style={{ background: "rgba(212,175,55,0.5)" }}
+//               />
+//               <div
+//                 className="w-2 h-2 rotate-45"
+//                 style={{ background: "#D4AF37" }}
+//               />
+//               <div
+//                 className="w-1 h-1 rotate-45"
+//                 style={{ background: "rgba(212,175,55,0.5)" }}
+//               />
+//             </div>
+//             <div
+//               className="h-px w-20"
+//               style={{
+//                 background:
+//                   "linear-gradient(to left, transparent, rgba(212,175,55,0.5))",
+//               }}
+//             />
+//           </div>
+
+//           {/* Date + venue + CTAs */}
+//           <div className="fade-up-5 flex flex-col items-center gap-3">
+//             <p className="font-jost text-sm tracking-[0.3em] uppercase font-semibold text-white">
+//               21st March 2026 &nbsp;·&nbsp; 11:00 AM
+//             </p>
+//             <p
+//               className="font-jost text-[0.65rem] tracking-[0.2em] uppercase font-light"
+//               style={{ color: "rgba(255,255,255,0.5)" }}
+//             >
+//               First Baptist Church, Okedogbon, Owo, Ondo State
+//             </p>
+
+//             {/* Colours badge */}
+//             <div
+//               className="flex items-center gap-2.5 px-4 py-3 mt-2 border"
+//               style={{ borderColor: "rgba(212,175,55,0.25)" }}
+//             >
+//               <div
+//                 className="w-2.5 h-2.5 rounded-full"
+//                 style={{ background: "#C4B7D7" }}
+//               />
+//               <p
+//                 className="font-jost text-[0.6rem] tracking-[0.25em] uppercase font-light"
+//                 style={{ color: "rgba(255,255,255,0.5)" }}
+//               >
+//                 Colours of the Day:&nbsp;
+//                 <span style={{ color: "rgba(255,255,255,0.75)" }}>
+//                   Lavender &amp; Gold
+//                 </span>
+//               </p>
+//               <div
+//                 className="w-2.5 h-2.5 rounded-full"
+//                 style={{ background: "#D4AF37" }}
+//               />
+//             </div>
+
+//             {/* CTA Buttons */}
+//             <div className="flex gap-4 flex-wrap justify-center items-center mt-4 mb-8">
+//               <a href="#program" className="hero-btn-outline">
+//                 View Programme
+//               </a>
+//               <a href="#rsvp" className="hero-btn-gold">
+//                 RSVP Now
+//               </a>
+//             </div>
+//           </div>
+//         </div>
+
+//         {/* Scroll indicator */}
+//       </section>
+//     </>
+//   );
+// }
+
 "use client";
 import Image from "next/image";
 
@@ -265,10 +614,6 @@ export default function Hero() {
         .fade-up-3 { animation: fadeUp 1s ease forwards 0.8s; opacity: 0; }
         .fade-up-4 { animation: fadeUp 1s ease forwards 1.1s; opacity: 0; }
         .fade-up-5 { animation: fadeUp 1s ease forwards 1.4s; opacity: 0; }
-
-        .gold-line {
-          background: linear-gradient(to right, transparent, #D4AF37, transparent);
-        }
 
         .ampersand-glow {
           text-shadow: 0 0 40px rgba(212,175,55,0.8), 0 0 80px rgba(212,175,55,0.4);
@@ -315,13 +660,26 @@ export default function Hero() {
           background: #e8c84a;
         }
 
-        .scroll-indicator {
-          animation: bounce 2s ease infinite;
+        /* Countdown */
+        @keyframes countFadeUp {
+          from { opacity: 0; transform: translateY(10px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
+        .count-block {
+          animation: countFadeUp 0.8s ease forwards;
+          opacity: 0;
+        }
+        .count-block:nth-child(1) { animation-delay: 1.8s; }
+        .count-block:nth-child(2) { animation-delay: 1.95s; }
+        .count-block:nth-child(3) { animation-delay: 2.1s; }
+        .count-block:nth-child(4) { animation-delay: 2.25s; }
 
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); opacity: 0.5; }
-          50%       { transform: translateY(8px); opacity: 1; }
+        .scroll-dot {
+          animation: scrollBounce 2s ease infinite;
+        }
+        @keyframes scrollBounce {
+          0%, 100% { transform: translateY(0); opacity: 0.4; }
+          50%       { transform: translateY(6px); opacity: 1; }
         }
       `}</style>
 
@@ -398,23 +756,29 @@ export default function Hero() {
 
         {/* Content */}
         <div className="relative z-30 flex flex-col items-center text-center w-full max-w-4xl pt-20">
-          {/* Family intro */}
-          <div className="fade-up-1 flex flex-col items-center gap-1.5 mb-8">
+          {/* Family intro — BOLDER */}
+          <div className="fade-up-1 flex flex-col items-center gap-2 mb-8">
             <p
-              className="font-jost text-[0.6rem] tracking-[0.5em] uppercase font-light"
-              style={{ color: "rgba(212,175,55,0.7)" }}
+              className="font-jost uppercase font-semibold tracking-[0.4em]"
+              style={{
+                fontSize: "clamp(0.65rem, 1.5vw, 0.8rem)",
+                color: "rgba(212,175,55,0.95)",
+              }}
             >
               The Families of Adeleke &amp; Ayanda
             </p>
             <p
-              className="font-jost text-[0.6rem] tracking-[0.45em] uppercase font-light"
-              style={{ color: "rgba(255,255,255,0.45)" }}
+              className="font-jost uppercase font-medium tracking-[0.35em]"
+              style={{
+                fontSize: "clamp(0.6rem, 1.3vw, 0.72rem)",
+                color: "rgba(255,255,255,0.7)",
+              }}
             >
               Cordially invite you to the
             </p>
           </div>
 
-          {/* Wedding Solemnization */}
+          {/* Wedding Solemnization — BOLDER */}
           <div className="fade-up-2 flex flex-col items-center mb-8">
             <div className="flex items-center gap-4 mb-3">
               <div
@@ -437,10 +801,10 @@ export default function Hero() {
               />
             </div>
             <p
-              className="font-cormorant italic font-light tracking-[0.2em]"
+              className="font-cormorant italic font-semibold tracking-[0.2em]"
               style={{
-                fontSize: "clamp(1rem, 2vw, 1.2rem)",
-                color: "rgba(212,175,55,0.85)",
+                fontSize: "clamp(1.1rem, 2.2vw, 1.4rem)",
+                color: "#D4AF37",
               }}
             >
               Wedding Solemnization
@@ -524,14 +888,20 @@ export default function Hero() {
             />
           </div>
 
-          {/* Date + venue + CTAs */}
+          {/* Date + venue + CTAs — BOLDER */}
           <div className="fade-up-5 flex flex-col items-center gap-3">
-            <p className="font-jost text-sm tracking-[0.3em] uppercase font-semibold text-white">
+            <p
+              className="font-jost tracking-[0.35em] uppercase font-bold text-white"
+              style={{ fontSize: "clamp(0.75rem, 1.8vw, 0.95rem)" }}
+            >
               21st March 2026 &nbsp;·&nbsp; 11:00 AM
             </p>
             <p
-              className="font-jost text-[0.65rem] tracking-[0.2em] uppercase font-light"
-              style={{ color: "rgba(255,255,255,0.5)" }}
+              className="font-jost tracking-[0.2em] uppercase font-medium"
+              style={{
+                fontSize: "clamp(0.65rem, 1.4vw, 0.78rem)",
+                color: "rgba(255,255,255,0.7)",
+              }}
             >
               First Baptist Church, Okedogbon, Owo, Ondo State
             </p>
@@ -539,18 +909,21 @@ export default function Hero() {
             {/* Colours badge */}
             <div
               className="flex items-center gap-2.5 px-4 py-3 mt-2 border"
-              style={{ borderColor: "rgba(212,175,55,0.25)" }}
+              style={{ borderColor: "rgba(212,175,55,0.3)" }}
             >
               <div
                 className="w-2.5 h-2.5 rounded-full"
                 style={{ background: "#C4B7D7" }}
               />
               <p
-                className="font-jost text-[0.6rem] tracking-[0.25em] uppercase font-light"
-                style={{ color: "rgba(255,255,255,0.5)" }}
+                className="font-jost tracking-[0.25em] uppercase font-medium"
+                style={{
+                  fontSize: "clamp(0.6rem, 1.2vw, 0.7rem)",
+                  color: "rgba(255,255,255,0.65)",
+                }}
               >
                 Colours of the Day:&nbsp;
-                <span style={{ color: "rgba(255,255,255,0.75)" }}>
+                <span style={{ color: "#D4AF37", fontWeight: 600 }}>
                   Lavender &amp; Gold
                 </span>
               </p>
@@ -559,6 +932,9 @@ export default function Hero() {
                 style={{ background: "#D4AF37" }}
               />
             </div>
+
+            {/* Live Countdown */}
+            <CountdownTimer targetDate="2026-03-21T11:00:00" />
 
             {/* CTA Buttons */}
             <div className="flex gap-4 flex-wrap justify-center items-center mt-4 mb-8">
@@ -573,7 +949,75 @@ export default function Hero() {
         </div>
 
         {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-2">
+          <p
+            className="font-jost text-[0.5rem] tracking-[0.4em] uppercase"
+            style={{ color: "rgba(255,255,255,0.3)" }}
+          >
+            Scroll
+          </p>
+          <div
+            className="scroll-dot w-1 h-1 rounded-full"
+            style={{ background: "rgba(212,175,55,0.6)" }}
+          />
+        </div>
       </section>
     </>
   );
 }
+
+/* ── Countdown Timer ── */
+function CountdownTimer({ targetDate }: { targetDate: string }) {
+  const [time, setTime] = React.useState(calcTime(targetDate));
+
+  React.useEffect(() => {
+    const id = setInterval(() => setTime(calcTime(targetDate)), 1000);
+    return () => clearInterval(id);
+  }, [targetDate]);
+
+  return (
+    <div className="flex items-center gap-4 mt-3 mb-1">
+      {[
+        { label: "Days", value: time.days },
+        { label: "Hours", value: time.hours },
+        { label: "Minutes", value: time.minutes },
+        { label: "Seconds", value: time.seconds },
+      ].map((unit, i) => (
+        <div
+          key={i}
+          className="count-block flex flex-col items-center"
+          style={{ minWidth: 52 }}
+        >
+          <div
+            className="font-cormorant italic text-white leading-none"
+            style={{
+              fontSize: "clamp(1.6rem, 4vw, 2.2rem)",
+              textShadow: "0 0 20px rgba(212,175,55,0.4)",
+            }}
+          >
+            {String(unit.value).padStart(2, "0")}
+          </div>
+          <p
+            className="font-jost uppercase tracking-[0.25em] mt-1"
+            style={{ fontSize: "0.48rem", color: "rgba(212,175,55,0.6)" }}
+          >
+            {unit.label}
+          </p>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function calcTime(targetDate: string) {
+  const diff = Math.max(0, new Date(targetDate).getTime() - Date.now());
+  return {
+    days: Math.floor(diff / 86400000),
+    hours: Math.floor((diff % 86400000) / 3600000),
+    minutes: Math.floor((diff % 3600000) / 60000),
+    seconds: Math.floor((diff % 60000) / 1000),
+  };
+}
+
+// Make React available for the CountdownTimer component
+import React from "react";
