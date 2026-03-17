@@ -325,6 +325,34 @@ export default function Hero() {
           text-shadow: 0 2px 20px rgba(0,0,0,0.5), 0 0 60px rgba(0,0,0,0.3);
         }
 
+        /* Color of the Day Badge Styling */
+        .color-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          background: rgba(255, 255, 255, 0.05);
+          backdrop-filter: blur(8px);
+          border: 1px solid rgba(212, 175, 55, 0.3);
+          padding: 6px 16px;
+          border-radius: 100px;
+          margin-top: 10px;
+        }
+
+        .swatch-pair {
+          display: flex;
+          align-items: center;
+        }
+
+        .swatch {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          border: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .swatch.lavender { background: #E6E6FA; box-shadow: 0 0 10px rgba(230, 230, 250, 0.4); }
+        .swatch.gold { background: #D4AF37; margin-left: -5px; box-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
+
         .hero-btn-outline {
           font-family: 'Jost', sans-serif;
           font-size: 0.65rem;
@@ -438,9 +466,9 @@ export default function Hero() {
           />
         ))}
 
-        {/* Content Wrapper - UPDATED PADDING TO MOVE CONTENT UP */}
+        {/* Content Wrapper */}
         <div className="relative z-30 flex flex-col items-center text-center w-full max-w-4xl pt-20 md:pt-32 pb-20">
-          {/* BIG BOLD COUNTDOWN - REDUCED MARGIN BOTTOM */}
+          {/* BIG BOLD COUNTDOWN */}
           <div className="fade-up-1 mb-8">
             <p
               className="font-jost uppercase tracking-[0.5em] text-[#D4AF37] mb-6 opacity-90"
@@ -451,7 +479,7 @@ export default function Hero() {
             <CountdownTimer targetDate="2026-03-21T11:00:00" />
           </div>
 
-          {/* Names - ADDED pb-10 FOR SPACING */}
+          {/* Names */}
           <div className="fade-up-2 flex flex-col items-center pb-10">
             <h1
               className="font-cormorant italic font-light text-white name-shadow leading-[0.8]"
@@ -494,6 +522,18 @@ export default function Hero() {
             >
               First Baptist Church, Okedogbon, Owo, Ondo State
             </p>
+
+            {/* COLOR OF THE DAY BADGE - MOVED HERE */}
+            <div className="color-badge">
+              <div className="swatch-pair">
+                <div className="swatch lavender"></div>
+                <div className="swatch gold"></div>
+              </div>
+              <span className="font-jost text-white uppercase tracking-[0.2em] text-[9px] font-semibold">
+                Color of the day:{" "}
+                <span className="text-[#D4AF37]">Lavender & Gold</span>
+              </span>
+            </div>
 
             <div className="flex gap-4 flex-wrap justify-center items-center mt-6">
               <a href="#program" className="hero-btn-outline">
