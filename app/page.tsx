@@ -5,6 +5,7 @@ import Ministers from "../components/sections/Ministers";
 import PhotoGroup from "../components/sections/PhotoGroup";
 import Gallery from "../components/sections/Gallery";
 import ReceptionProgram from "../components/sections/receptionProgram";
+import Direction from "../components/sections/Direction";
 import RSVP from "../components/sections/RSVP";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
       <PhotoGroup />
       <Gallery />
       <ReceptionProgram />
+      <Direction />
       <RSVP />
     </main>
   );

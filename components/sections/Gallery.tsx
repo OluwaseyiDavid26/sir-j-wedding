@@ -1,50 +1,69 @@
 // "use client";
 // import { useRef, useEffect, useState, useCallback } from "react";
-// import Image from "next/image";
 
-// // Dummy gallery items — swap src with real Drive images later
 // const galleryItems = [
-//   { id: 1, src: "/tt28.jpg", alt: "Couple portrait", span: "tall" },
-//   { id: 2, src: "/tt28.jpg", alt: "Bride close up", span: "normal" },
-//   { id: 3, src: "/tt28.jpg", alt: "Groom portrait", span: "normal" },
-//   { id: 4, src: "/tt28.jpg", alt: "Couple walking", span: "wide" },
-//   { id: 5, src: "/tt28.jpg", alt: "Romantic moment", span: "tall" },
-//   { id: 6, src: "/tt28.jpg", alt: "Bride detail", span: "normal" },
-//   { id: 7, src: "/tt28.jpg", alt: "Ring shot", span: "normal" },
-//   { id: 8, src: "/tt28.jpg", alt: "Couple laughing", span: "normal" },
-//   { id: 9, src: "/tt28.jpg", alt: "Sunset portrait", span: "wide" },
-//   { id: 10, src: "/tt28.jpg", alt: "Intimate moment", span: "normal" },
-//   { id: 11, src: "/tt28.jpg", alt: "Bride & groom", span: "tall" },
-//   { id: 12, src: "/tt28.jpg", alt: "Full length portrait", span: "normal" },
+//   { id: 1, fileId: "1449qTzugPLD2a2bsc8WpGv_WczsGzSrB", span: "tall" },
+//   { id: 2, fileId: "1x14EM0EUy_QE5Ef6NjKb18WiZV3sg9AM", span: "normal" },
+//   { id: 3, fileId: "18kd742EhS3teubo4Rrj0Pu22M1vwyBjc", span: "normal" },
+//   { id: 4, fileId: "1Rgo2sI5Ri3LcdDxuwOWZ7dAWi8CgPJ6H", span: "wide" },
+//   { id: 5, fileId: "18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr", span: "normal" },
+//   { id: 6, fileId: "1HwMl0RET8DGYJqODx-1o6FvZrV1KaDs_", span: "tall" },
+//   { id: 7, fileId: "189xxOfK3VDGDw1i-sug4RQytkjHfO9FY", span: "normal" },
+//   { id: 8, fileId: "1iGY5OK5QSV6nVBgPw9sqX2c1PZquKbIZ", span: "normal" },
+//   { id: 9, fileId: "1cvU8FzRmILKECFl2Wt3VzMCUHqtsnobO", span: "wide" },
+//   { id: 10, fileId: "1qVaS0oibJI8QjSVp70VC8jIbKYKE7GCP", span: "normal" },
+//   { id: 11, fileId: "1Rgo2sI5Ri3LcdDxuwOWZ7dAWi8CgPJ6H", span: "tall" },
+//   { id: 12, fileId: "18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr", span: "normal" },
 // ];
 
-// function useInView(threshold = 0.1) {
-//   const ref = useRef<HTMLDivElement>(null);
-//   const [inView, setInView] = useState(false);
-//   useEffect(() => {
-//     const obs = new IntersectionObserver(
-//       ([e]) => {
-//         if (e.isIntersecting) setInView(true);
-//       },
-//       { threshold },
-//     );
-//     if (ref.current) obs.observe(ref.current);
-//     return () => obs.disconnect();
-//   }, []);
-//   return { ref, inView };
+// const UNLOCK_DATE = new Date("2026-03-20T23:59:59").getTime();
+
+// function useDriveImage(fileId: string, highRes = false) {
+//   const urls = highRes
+//     ? [
+//         `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`,
+//         `https://drive.google.com/uc?export=view&id=${fileId}`,
+//       ]
+//     : [
+//         `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`,
+//         `https://drive.google.com/uc?export=view&id=${fileId}`,
+//       ];
+
+//   const [urlIndex, setUrlIndex] = useState(0);
+//   const [failed, setFailed] = useState(false);
+
+//   const handleError = () => {
+//     if (urlIndex < urls.length - 1) setUrlIndex((i) => i + 1);
+//     else setFailed(true);
+//   };
+
+//   return { url: urls[urlIndex], failed, handleError };
 // }
 
-// function GalleryItem({
-//   item,
-//   index,
-//   onClick,
-// }: {
-//   item: (typeof galleryItems)[0];
-//   index: number;
-//   onClick: (index: number) => void;
-// }) {
-//   const { ref, inView } = useInView();
+// function DriveImage({
+//   fileId,
+//   className,
+//   highRes = false,
+//   contain = false,
+// }: any) {
+//   const { url, failed, handleError } = useDriveImage(fileId, highRes);
 
+//   if (failed) return <div className={`${className} bg-purple-900/20`} />;
+
+//   return (
+//     // eslint-disable-next-line @next/next/no-img-element
+//     <img
+//       src={url}
+//       alt=""
+//       className={`${className} ${contain ? "object-contain" : "object-cover"}`}
+//       loading="lazy"
+//       onError={handleError}
+//       referrerPolicy="no-referrer"
+//     />
+//   );
+// }
+
+// function GalleryItem({ item, index, onClick }: any) {
 //   const heightClass =
 //     item.span === "tall"
 //       ? "row-span-2"
@@ -54,1008 +73,111 @@
 
 //   return (
 //     <div
-//       ref={ref}
-//       className={`group relative overflow-hidden cursor-pointer ${heightClass}`}
-//       style={{
-//         opacity: inView ? 1 : 0,
-//         transform: inView ? "scale(1)" : "scale(0.95)",
-//         transition: `opacity 0.7s ease ${index * 80}ms, transform 0.7s ease ${index * 80}ms`,
-//         minHeight: item.span === "tall" ? "420px" : "200px",
-//       }}
+//       className={`group relative overflow-hidden cursor-pointer ${heightClass} bg-[#0a0514]`}
 //       onClick={() => onClick(index)}
 //     >
-//       {/* Image */}
-//       <Image
-//         src={item.src}
-//         alt={item.alt}
-//         fill
-//         className="object-cover transition-transform duration-700 group-hover:scale-110"
+//       <DriveImage
+//         fileId={item.fileId}
+//         className="w-full h-full transition-transform duration-700 group-hover:scale-105"
 //       />
-
-//       {/* Dark overlay */}
-//       <div
-//         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-//         style={{
-//           background:
-//             "linear-gradient(to top, rgba(5,2,12,0.85) 0%, rgba(5,2,12,0.2) 60%, transparent 100%)",
-//         }}
-//       />
-
-//       {/* Corner brackets */}
-//       <div className="absolute inset-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-//         <div
-//           className="absolute top-0 left-0 w-5 h-5"
-//           style={{
-//             borderTop: "1px solid rgba(212,175,55,0.8)",
-//             borderLeft: "1px solid rgba(212,175,55,0.8)",
-//           }}
-//         />
-//         <div
-//           className="absolute top-0 right-0 w-5 h-5"
-//           style={{
-//             borderTop: "1px solid rgba(212,175,55,0.8)",
-//             borderRight: "1px solid rgba(212,175,55,0.8)",
-//           }}
-//         />
-//         <div
-//           className="absolute bottom-0 left-0 w-5 h-5"
-//           style={{
-//             borderBottom: "1px solid rgba(212,175,55,0.8)",
-//             borderLeft: "1px solid rgba(212,175,55,0.8)",
-//           }}
-//         />
-//         <div
-//           className="absolute bottom-0 right-0 w-5 h-5"
-//           style={{
-//             borderBottom: "1px solid rgba(212,175,55,0.8)",
-//             borderRight: "1px solid rgba(212,175,55,0.8)",
-//           }}
-//         />
-//       </div>
-
-//       {/* Caption */}
-//       <div
-//         className="absolute bottom-0 left-0 right-0 p-4 translate-y-2
-//         opacity-0 group-hover:opacity-100 group-hover:translate-y-0
-//         transition-all duration-500"
-//       >
-//         <p className="font-cormorant italic text-white/80 text-sm">
-//           {item.alt}
-//         </p>
-//       </div>
-
-//       {/* Expand icon */}
-//       <div
-//         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-//         w-10 h-10 flex items-center justify-center
-//         opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100
-//         transition-all duration-400"
-//         style={{ border: "1px solid rgba(212,175,55,0.6)" }}
-//       >
-//         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-//           <path
-//             d="M1 1h4M1 1v4M13 1h-4M13 1v4M1 13h4M1 13v-4M13 13h-4M13 13v-4"
-//             stroke="rgba(212,175,55,0.9)"
-//             strokeWidth="1.2"
-//             strokeLinecap="round"
-//           />
-//         </svg>
-//       </div>
+//       <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
 //     </div>
 //   );
 // }
 
-// function Lightbox({
-//   items,
-//   activeIndex,
-//   onClose,
-//   onPrev,
-//   onNext,
-// }: {
-//   items: typeof galleryItems;
-//   activeIndex: number;
-//   onClose: () => void;
-//   onPrev: () => void;
-//   onNext: () => void;
-// }) {
-//   useEffect(() => {
-//     const handler = (e: KeyboardEvent) => {
-//       if (e.key === "Escape") onClose();
-//       if (e.key === "ArrowLeft") onPrev();
-//       if (e.key === "ArrowRight") onNext();
-//     };
-//     window.addEventListener("keydown", handler);
-//     return () => window.removeEventListener("keydown", handler);
-//   }, [onClose, onPrev, onNext]);
-
+// function Lightbox({ items, activeIndex, onClose, onPrev, onNext }: any) {
 //   const item = items[activeIndex];
-
 //   return (
 //     <div
-//       className="fixed inset-0 z-[200] flex items-center justify-center"
-//       style={{ background: "rgba(5,2,12,0.96)", backdropFilter: "blur(12px)" }}
+//       className="fixed inset-0 z-[300] flex items-center justify-center bg-black/95 backdrop-blur-md p-4"
 //       onClick={onClose}
 //     >
-//       {/* Image container */}
 //       <div
-//         className="relative w-full max-w-4xl mx-6"
-//         style={{ maxHeight: "85vh", aspectRatio: "3/2" }}
+//         className="relative max-w-5xl w-full flex items-center justify-center"
 //         onClick={(e) => e.stopPropagation()}
 //       >
-//         {/* Corner brackets */}
-//         <div className="absolute -inset-2 pointer-events-none">
-//           <div
-//             className="absolute top-0 left-0 w-8 h-8"
-//             style={{
-//               borderTop: "1px solid rgba(212,175,55,0.5)",
-//               borderLeft: "1px solid rgba(212,175,55,0.5)",
-//             }}
-//           />
-//           <div
-//             className="absolute top-0 right-0 w-8 h-8"
-//             style={{
-//               borderTop: "1px solid rgba(212,175,55,0.5)",
-//               borderRight: "1px solid rgba(212,175,55,0.5)",
-//             }}
-//           />
-//           <div
-//             className="absolute bottom-0 left-0 w-8 h-8"
-//             style={{
-//               borderBottom: "1px solid rgba(212,175,55,0.5)",
-//               borderLeft: "1px solid rgba(212,175,55,0.5)",
-//             }}
-//           />
-//           <div
-//             className="absolute bottom-0 right-0 w-8 h-8"
-//             style={{
-//               borderBottom: "1px solid rgba(212,175,55,0.5)",
-//               borderRight: "1px solid rgba(212,175,55,0.5)",
-//             }}
-//           />
-//         </div>
-
-//         <Image
-//           src={item.src}
-//           alt={item.alt}
-//           fill
-//           className="object-cover"
-//           priority
+//         <DriveImage
+//           fileId={item.fileId}
+//           highRes
+//           contain
+//           className="max-h-[85vh] w-auto shadow-2xl"
 //         />
 
-//         {/* Caption */}
-//         <div
-//           className="absolute bottom-0 left-0 right-0 p-5"
-//           style={{
-//             background:
-//               "linear-gradient(to top, rgba(5,2,12,0.9), transparent)",
-//           }}
+//         {/* Navigation */}
+//         <button
+//           onClick={onPrev}
+//           className="absolute left-0 text-white/50 hover:text-white text-4xl p-4"
 //         >
-//           <p className="font-cormorant italic text-white/70 text-base">
-//             {item.alt}
-//           </p>
-//           <p
-//             className="font-jost text-[0.55rem] tracking-[0.3em] uppercase mt-1"
-//             style={{ color: "rgba(212,175,55,0.5)" }}
-//           >
-//             {activeIndex + 1} / {items.length}
-//           </p>
-//         </div>
+//           ‹
+//         </button>
+//         <button
+//           onClick={onNext}
+//           className="absolute right-0 text-white/50 hover:text-white text-4xl p-4"
+//         >
+//           ›
+//         </button>
+//         <button
+//           onClick={onClose}
+//           className="absolute -top-10 right-0 text-white/50 hover:text-white text-2xl"
+//         >
+//           ✕ Close
+//         </button>
 //       </div>
-
-//       {/* Prev button */}
-//       <button
-//         className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center
-//           transition-all duration-300 hover:scale-110 border-none outline-none cursor-pointer"
-//         style={{
-//           background: "rgba(212,175,55,0.1)",
-//           border: "1px solid rgba(212,175,55,0.2)",
-//         }}
-//         onClick={(e) => {
-//           e.stopPropagation();
-//           onPrev();
-//         }}
-//       >
-//         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-//           <path
-//             d="M10 3L5 8l5 5"
-//             stroke="rgba(212,175,55,0.8)"
-//             strokeWidth="1.2"
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//           />
-//         </svg>
-//       </button>
-
-//       {/* Next button */}
-//       <button
-//         className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center
-//           transition-all duration-300 hover:scale-110 border-none outline-none cursor-pointer"
-//         style={{
-//           background: "rgba(212,175,55,0.1)",
-//           border: "1px solid rgba(212,175,55,0.2)",
-//         }}
-//         onClick={(e) => {
-//           e.stopPropagation();
-//           onNext();
-//         }}
-//       >
-//         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-//           <path
-//             d="M6 3l5 5-5 5"
-//             stroke="rgba(212,175,55,0.8)"
-//             strokeWidth="1.2"
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//           />
-//         </svg>
-//       </button>
-
-//       {/* Close button */}
-//       <button
-//         className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center
-//           transition-all duration-300 hover:scale-110 border-none outline-none cursor-pointer"
-//         style={{
-//           background: "rgba(255,255,255,0.05)",
-//           border: "1px solid rgba(255,255,255,0.1)",
-//         }}
-//         onClick={onClose}
-//       >
-//         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-//           <path
-//             d="M1 1l12 12M13 1L1 13"
-//             stroke="rgba(255,255,255,0.6)"
-//             strokeWidth="1.2"
-//             strokeLinecap="round"
-//           />
-//         </svg>
-//       </button>
 //     </div>
 //   );
 // }
 
 // export default function Gallery() {
 //   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-//   const { ref: headerRef, inView: headerIn } = useInView(0.3);
+//   const [isUnlocked, setIsUnlocked] = useState(false);
 
-//   const openLightbox = useCallback(
-//     (index: number) => setLightboxIndex(index),
-//     [],
-//   );
-//   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
-//   const prevPhoto = useCallback(
-//     () =>
-//       setLightboxIndex((i) =>
-//         i !== null ? (i - 1 + galleryItems.length) % galleryItems.length : null,
-//       ),
-//     [],
-//   );
-//   const nextPhoto = useCallback(
-//     () =>
-//       setLightboxIndex((i) =>
-//         i !== null ? (i + 1) % galleryItems.length : null,
-//       ),
-//     [],
-//   );
-
-//   // Lock body scroll when lightbox is open
 //   useEffect(() => {
-//     document.body.style.overflow = lightboxIndex !== null ? "hidden" : "";
-//     return () => {
-//       document.body.style.overflow = "";
-//     };
-//   }, [lightboxIndex]);
+//     const checkTime = () => setIsUnlocked(Date.now() > UNLOCK_DATE);
+//     checkTime();
+//     const timer = setInterval(checkTime, 10000);
+//     return () => clearInterval(timer);
+//   }, []);
 
 //   return (
 //     <>
 //       <style>{`
-//         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+//         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400&family=Jost:wght@300;400&display=swap');
 //         .font-cormorant { font-family: 'Cormorant Garamond', serif; }
 //         .font-jost { font-family: 'Jost', sans-serif; }
 //       `}</style>
 
-//       <section
-//         id="gallery"
-//         className="relative py-28 px-6 overflow-hidden"
-//         style={{
-//           background:
-//             "linear-gradient(to bottom, #080310 0%, #0a0514 50%, #080310 100%)",
-//         }}
-//       >
-//         {/* Ambient glows */}
-//         <div
-//           className="absolute top-1/4 left-1/3 w-[500px] h-[500px] rounded-full pointer-events-none"
-//           style={{
-//             background:
-//               "radial-gradient(circle, rgba(107,63,160,0.08) 0%, transparent 70%)",
-//           }}
-//         />
-//         <div
-//           className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] rounded-full pointer-events-none"
-//           style={{
-//             background:
-//               "radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%)",
-//           }}
-//         />
-
-//         <div className="max-w-6xl mx-auto relative z-10">
-//           {/* Header */}
-//           <div
-//             ref={headerRef}
-//             className="flex flex-col items-center text-center mb-16"
-//             style={{
-//               opacity: headerIn ? 1 : 0,
-//               transform: headerIn ? "translateY(0)" : "translateY(20px)",
-//               transition: "opacity 0.9s ease, transform 0.9s ease",
-//             }}
-//           >
-//             <p
-//               className="font-jost text-[0.6rem] tracking-[0.5em] uppercase mb-4"
-//               style={{ color: "rgba(212,175,55,0.7)" }}
-//             >
-//               Our Story in Frames
-//             </p>
-
-//             <div className="flex items-center gap-4 mb-5">
-//               <div
-//                 className="h-px w-16"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to right, transparent, rgba(212,175,55,0.6))",
-//                 }}
-//               />
-//               <div
-//                 className="w-1.5 h-1.5 rotate-45"
-//                 style={{ background: "#D4AF37" }}
-//               />
-//               <div
-//                 className="h-px w-16"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to left, transparent, rgba(212,175,55,0.6))",
-//                 }}
-//               />
-//             </div>
-
-//             <h2
-//               className="font-cormorant italic font-light text-white leading-none"
-//               style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)" }}
-//             >
+//       <section className="bg-[#080310] py-20 px-4">
+//         <div className="max-w-6xl mx-auto">
+//           <div className="text-center mb-12">
+//             <h2 className="font-cormorant italic text-5xl text-white mb-2">
 //               Gallery
 //             </h2>
-
-//             <div className="flex items-center gap-3 mt-5">
-//               <div
-//                 className="h-px w-10"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to right, transparent, rgba(212,175,55,0.4))",
-//                 }}
-//               />
-//               <div
-//                 className="w-1 h-1 rotate-45"
-//                 style={{ background: "rgba(212,175,55,0.5)" }}
-//               />
-//               <p className="font-cormorant italic text-white/30 text-base tracking-widest">
-//                 Oluwatosin & Jesutomi
-//               </p>
-//               <div
-//                 className="w-1 h-1 rotate-45"
-//                 style={{ background: "rgba(212,175,55,0.5)" }}
-//               />
-//               <div
-//                 className="h-px w-10"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to left, transparent, rgba(212,175,55,0.4))",
-//                 }}
-//               />
-//             </div>
+//             <p className="font-jost text-gold/60 tracking-[0.3em] uppercase text-xs">
+//               Oluwatosin & Jesutomi
+//             </p>
 //           </div>
 
-//           {/* Masonry Grid */}
-//           <div
-//             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
-//             style={{ gridAutoRows: "200px" }}
-//           >
+//           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 auto-rows-[150px] md:auto-rows-[200px]">
 //             {galleryItems.map((item, i) => (
 //               <GalleryItem
 //                 key={item.id}
 //                 item={item}
 //                 index={i}
-//                 onClick={openLightbox}
+//                 onClick={setLightboxIndex}
 //               />
 //             ))}
 //           </div>
 
-//           {/* Footer */}
-//           <div className="flex flex-col items-center mt-16 gap-3">
-//             <div className="flex items-center gap-5">
-//               <div
-//                 className="h-px w-20"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to right, transparent, rgba(212,175,55,0.4))",
-//                 }}
-//               />
-//               <div className="flex gap-2 items-center">
-//                 <div
-//                   className="w-1 h-1 rotate-45"
-//                   style={{ background: "rgba(212,175,55,0.4)" }}
-//                 />
-//                 <div
-//                   className="w-2 h-2 rotate-45"
-//                   style={{ background: "#D4AF37" }}
-//                 />
-//                 <div
-//                   className="w-1 h-1 rotate-45"
-//                   style={{ background: "rgba(212,175,55,0.4)" }}
-//                 />
-//               </div>
-//               <div
-//                 className="h-px w-20"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to left, transparent, rgba(212,175,55,0.4))",
-//                 }}
-//               />
-//             </div>
-//             <p className="font-cormorant italic text-white/20 tracking-widest text-base">
-//               Every picture tells our story
-//             </p>
-//           </div>
-//         </div>
-//       </section>
-
-//       {/* Lightbox */}
-//       {lightboxIndex !== null && (
-//         <Lightbox
-//           items={galleryItems}
-//           activeIndex={lightboxIndex}
-//           onClose={closeLightbox}
-//           onPrev={prevPhoto}
-//           onNext={nextPhoto}
-//         />
-//       )}
-//     </>
-//   );
-// }
-
-// "use client";
-// import { useRef, useEffect, useState, useCallback } from "react";
-// import Image from "next/image";
-
-// // All 12 unique Google Drive images
-// const galleryItems = [
-//   {
-//     id: 1,
-//     src: "https://drive.google.com/uc?export=view&id=1449qTzugPLD2a2bsc8WpGv_WczsGzSrB",
-//     span: "tall",
-//   },
-//   {
-//     id: 2,
-//     src: "https://drive.google.com/uc?export=view&id=1x14EM0EUy_QE5Ef6NjKb18WiZV3sg9AM",
-//     span: "normal",
-//   },
-//   {
-//     id: 3,
-//     src: "https://drive.google.com/uc?export=view&id=18kd742EhS3teubo4Rrj0Pu22M1vwyBjc",
-//     span: "normal",
-//   },
-//   {
-//     id: 4,
-//     src: "https://drive.google.com/uc?export=view&id=1Rgo2sI5Ri3LcdDxuwOWZ7dAWi8CgPJ6H",
-//     span: "wide",
-//   },
-//   {
-//     id: 5,
-//     src: "https://drive.google.com/uc?export=view&id=18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr",
-//     span: "normal",
-//   },
-//   {
-//     id: 6,
-//     src: "https://drive.google.com/uc?export=view&id=1HwMl0RET8DGYJqODx-1o6FvZrV1KaDs_",
-//     span: "tall",
-//   },
-//   {
-//     id: 7,
-//     src: "https://drive.google.com/uc?export=view&id=189xxOfK3VDGDw1i-sug4RQytkjHfO9FY",
-//     span: "normal",
-//   },
-//   {
-//     id: 8,
-//     src: "https://drive.google.com/uc?export=view&id=1iGY5OK5QSV6nVBgPw9sqX2c1PZquKbIZ",
-//     span: "normal",
-//   },
-//   {
-//     id: 9,
-//     src: "https://drive.google.com/uc?export=view&id=1cvU8FzRmILKECFl2Wt3VzMCUHqtsnobO",
-//     span: "wide",
-//   },
-//   {
-//     id: 10,
-//     src: "https://drive.google.com/uc?export=view&id=1qVaS0oibJI8QjSVp70VC8jIbKYKE7GCP",
-//     span: "normal",
-//   },
-//   {
-//     id: 11,
-//     src: "https://drive.google.com/uc?export=view&id=1449qTzugPLD2a2bsc8WpGv_WczsGzSrB",
-//     span: "tall",
-//   },
-//   {
-//     id: 12,
-//     src: "https://drive.google.com/uc?export=view&id=1x14EM0EUy_QE5Ef6NjKb18WiZV3sg9AM",
-//     span: "normal",
-//   },
-// ];
-
-// // NOTE: IDs 1 & 11, and 2 & 12 reuse the first batch since one Drive link was a duplicate.
-// // Swap those src values with real IDs when available.
-
-// function useInView(threshold = 0.1) {
-//   const ref = useRef<HTMLDivElement>(null);
-//   const [inView, setInView] = useState(false);
-//   useEffect(() => {
-//     const obs = new IntersectionObserver(
-//       ([e]) => {
-//         if (e.isIntersecting) setInView(true);
-//       },
-//       { threshold },
-//     );
-//     if (ref.current) obs.observe(ref.current);
-//     return () => obs.disconnect();
-//   }, []);
-//   return { ref, inView };
-// }
-
-// function GalleryItem({
-//   item,
-//   index,
-//   onClick,
-// }: {
-//   item: (typeof galleryItems)[0];
-//   index: number;
-//   onClick: (index: number) => void;
-// }) {
-//   const { ref, inView } = useInView();
-//   const heightClass =
-//     item.span === "tall"
-//       ? "row-span-2"
-//       : item.span === "wide"
-//         ? "col-span-2"
-//         : "";
-
-//   return (
-//     <div
-//       ref={ref}
-//       className={`group relative overflow-hidden cursor-pointer ${heightClass}`}
-//       style={{
-//         opacity: inView ? 1 : 0,
-//         transform: inView ? "scale(1)" : "scale(0.95)",
-//         transition: `opacity 0.7s ease ${index * 80}ms, transform 0.7s ease ${index * 80}ms`,
-//         minHeight: item.span === "tall" ? "420px" : "200px",
-//       }}
-//       onClick={() => onClick(index)}
-//     >
-//       <Image
-//         src={item.src}
-//         alt={`Photo ${item.id}`}
-//         fill
-//         unoptimized
-//         className="object-cover transition-transform duration-700 group-hover:scale-110"
-//       />
-
-//       {/* Hover overlay */}
-//       <div
-//         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-//         style={{
-//           background:
-//             "linear-gradient(to top, rgba(5,2,12,0.7) 0%, rgba(5,2,12,0.1) 60%, transparent 100%)",
-//         }}
-//       />
-
-//       {/* Corner brackets */}
-//       <div className="absolute inset-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-//         <div
-//           className="absolute top-0 left-0 w-5 h-5"
-//           style={{
-//             borderTop: "1px solid rgba(212,175,55,0.8)",
-//             borderLeft: "1px solid rgba(212,175,55,0.8)",
-//           }}
-//         />
-//         <div
-//           className="absolute top-0 right-0 w-5 h-5"
-//           style={{
-//             borderTop: "1px solid rgba(212,175,55,0.8)",
-//             borderRight: "1px solid rgba(212,175,55,0.8)",
-//           }}
-//         />
-//         <div
-//           className="absolute bottom-0 left-0 w-5 h-5"
-//           style={{
-//             borderBottom: "1px solid rgba(212,175,55,0.8)",
-//             borderLeft: "1px solid rgba(212,175,55,0.8)",
-//           }}
-//         />
-//         <div
-//           className="absolute bottom-0 right-0 w-5 h-5"
-//           style={{
-//             borderBottom: "1px solid rgba(212,175,55,0.8)",
-//             borderRight: "1px solid rgba(212,175,55,0.8)",
-//           }}
-//         />
-//       </div>
-
-//       {/* Expand icon */}
-//       <div
-//         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-//           w-10 h-10 flex items-center justify-center
-//           opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100
-//           transition-all duration-400"
-//         style={{ border: "1px solid rgba(212,175,55,0.6)" }}
-//       >
-//         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-//           <path
-//             d="M1 1h4M1 1v4M13 1h-4M13 1v4M1 13h4M1 13v-4M13 13h-4M13 13v-4"
-//             stroke="rgba(212,175,55,0.9)"
-//             strokeWidth="1.2"
-//             strokeLinecap="round"
-//           />
-//         </svg>
-//       </div>
-//     </div>
-//   );
-// }
-
-// function Lightbox({
-//   items,
-//   activeIndex,
-//   onClose,
-//   onPrev,
-//   onNext,
-// }: {
-//   items: typeof galleryItems;
-//   activeIndex: number;
-//   onClose: () => void;
-//   onPrev: () => void;
-//   onNext: () => void;
-// }) {
-//   useEffect(() => {
-//     const handler = (e: KeyboardEvent) => {
-//       if (e.key === "Escape") onClose();
-//       if (e.key === "ArrowLeft") onPrev();
-//       if (e.key === "ArrowRight") onNext();
-//     };
-//     window.addEventListener("keydown", handler);
-//     return () => window.removeEventListener("keydown", handler);
-//   }, [onClose, onPrev, onNext]);
-
-//   const item = items[activeIndex];
-
-//   return (
-//     <div
-//       className="fixed inset-0 z-[200] flex items-center justify-center"
-//       style={{ background: "rgba(5,2,12,0.96)", backdropFilter: "blur(12px)" }}
-//       onClick={onClose}
-//     >
-//       <div
-//         className="relative w-full max-w-4xl mx-6"
-//         style={{ maxHeight: "85vh", aspectRatio: "3/2" }}
-//         onClick={(e) => e.stopPropagation()}
-//       >
-//         {/* Corner brackets */}
-//         <div className="absolute -inset-2 pointer-events-none">
-//           <div
-//             className="absolute top-0 left-0 w-8 h-8"
-//             style={{
-//               borderTop: "1px solid rgba(212,175,55,0.5)",
-//               borderLeft: "1px solid rgba(212,175,55,0.5)",
-//             }}
-//           />
-//           <div
-//             className="absolute top-0 right-0 w-8 h-8"
-//             style={{
-//               borderTop: "1px solid rgba(212,175,55,0.5)",
-//               borderRight: "1px solid rgba(212,175,55,0.5)",
-//             }}
-//           />
-//           <div
-//             className="absolute bottom-0 left-0 w-8 h-8"
-//             style={{
-//               borderBottom: "1px solid rgba(212,175,55,0.5)",
-//               borderLeft: "1px solid rgba(212,175,55,0.5)",
-//             }}
-//           />
-//           <div
-//             className="absolute bottom-0 right-0 w-8 h-8"
-//             style={{
-//               borderBottom: "1px solid rgba(212,175,55,0.5)",
-//               borderRight: "1px solid rgba(212,175,55,0.5)",
-//             }}
-//           />
-//         </div>
-
-//         <Image
-//           src={item.src}
-//           alt={`Photo ${item.id}`}
-//           fill
-//           unoptimized
-//           className="object-cover"
-//           priority
-//         />
-
-//         {/* Counter only */}
-//         <div
-//           className="absolute bottom-0 left-0 right-0 p-4"
-//           style={{
-//             background:
-//               "linear-gradient(to top, rgba(5,2,12,0.8), transparent)",
-//           }}
-//         >
-//           <p
-//             className="font-jost text-[0.55rem] tracking-[0.3em] uppercase"
-//             style={{ color: "rgba(212,175,55,0.5)" }}
-//           >
-//             {activeIndex + 1} / {items.length}
-//           </p>
-//         </div>
-//       </div>
-
-//       {/* Prev */}
-//       <button
-//         className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center
-//           transition-all duration-300 hover:scale-110 border-none outline-none cursor-pointer"
-//         style={{
-//           background: "rgba(212,175,55,0.1)",
-//           border: "1px solid rgba(212,175,55,0.2)",
-//         }}
-//         onClick={(e) => {
-//           e.stopPropagation();
-//           onPrev();
-//         }}
-//       >
-//         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-//           <path
-//             d="M10 3L5 8l5 5"
-//             stroke="rgba(212,175,55,0.8)"
-//             strokeWidth="1.2"
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//           />
-//         </svg>
-//       </button>
-
-//       {/* Next */}
-//       <button
-//         className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center
-//           transition-all duration-300 hover:scale-110 border-none outline-none cursor-pointer"
-//         style={{
-//           background: "rgba(212,175,55,0.1)",
-//           border: "1px solid rgba(212,175,55,0.2)",
-//         }}
-//         onClick={(e) => {
-//           e.stopPropagation();
-//           onNext();
-//         }}
-//       >
-//         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-//           <path
-//             d="M6 3l5 5-5 5"
-//             stroke="rgba(212,175,55,0.8)"
-//             strokeWidth="1.2"
-//             strokeLinecap="round"
-//             strokeLinejoin="round"
-//           />
-//         </svg>
-//       </button>
-
-//       {/* Close */}
-//       <button
-//         className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center
-//           transition-all duration-300 hover:scale-110 border-none outline-none cursor-pointer"
-//         style={{
-//           background: "rgba(255,255,255,0.05)",
-//           border: "1px solid rgba(255,255,255,0.1)",
-//         }}
-//         onClick={onClose}
-//       >
-//         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-//           <path
-//             d="M1 1l12 12M13 1L1 13"
-//             stroke="rgba(255,255,255,0.6)"
-//             strokeWidth="1.2"
-//             strokeLinecap="round"
-//           />
-//         </svg>
-//       </button>
-//     </div>
-//   );
-// }
-
-// export default function Gallery() {
-//   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-//   const { ref: headerRef, inView: headerIn } = useInView(0.3);
-
-//   const openLightbox = useCallback(
-//     (index: number) => setLightboxIndex(index),
-//     [],
-//   );
-//   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
-//   const prevPhoto = useCallback(
-//     () =>
-//       setLightboxIndex((i) =>
-//         i !== null ? (i - 1 + galleryItems.length) % galleryItems.length : null,
-//       ),
-//     [],
-//   );
-//   const nextPhoto = useCallback(
-//     () =>
-//       setLightboxIndex((i) =>
-//         i !== null ? (i + 1) % galleryItems.length : null,
-//       ),
-//     [],
-//   );
-
-//   useEffect(() => {
-//     document.body.style.overflow = lightboxIndex !== null ? "hidden" : "";
-//     return () => {
-//       document.body.style.overflow = "";
-//     };
-//   }, [lightboxIndex]);
-
-//   return (
-//     <>
-//       <style>{`
-//         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
-//         .font-cormorant { font-family: 'Cormorant Garamond', serif; }
-//         .font-jost      { font-family: 'Jost', sans-serif; }
-//       `}</style>
-
-//       <section
-//         id="gallery"
-//         className="relative py-28 px-6 overflow-hidden"
-//         style={{
-//           background:
-//             "linear-gradient(to bottom, #080310 0%, #0a0514 50%, #080310 100%)",
-//         }}
-//       >
-//         <div
-//           className="absolute top-1/4 left-1/3 w-[500px] h-[500px] rounded-full pointer-events-none"
-//           style={{
-//             background:
-//               "radial-gradient(circle, rgba(107,63,160,0.08) 0%, transparent 70%)",
-//           }}
-//         />
-//         <div
-//           className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] rounded-full pointer-events-none"
-//           style={{
-//             background:
-//               "radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%)",
-//           }}
-//         />
-
-//         <div className="max-w-6xl mx-auto relative z-10">
-//           {/* Header */}
-//           <div
-//             ref={headerRef}
-//             className="flex flex-col items-center text-center mb-16"
-//             style={{
-//               opacity: headerIn ? 1 : 0,
-//               transform: headerIn ? "translateY(0)" : "translateY(20px)",
-//               transition: "opacity 0.9s ease, transform 0.9s ease",
-//             }}
-//           >
-//             <p
-//               className="font-jost text-[0.6rem] tracking-[0.5em] uppercase mb-4"
-//               style={{ color: "rgba(212,175,55,0.7)" }}
-//             >
-//               Our Story in Frames
-//             </p>
-//             <div className="flex items-center gap-4 mb-5">
-//               <div
-//                 className="h-px w-16"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to right, transparent, rgba(212,175,55,0.6))",
-//                 }}
-//               />
-//               <div
-//                 className="w-1.5 h-1.5 rotate-45"
-//                 style={{ background: "#D4AF37" }}
-//               />
-//               <div
-//                 className="h-px w-16"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to left, transparent, rgba(212,175,55,0.6))",
-//                 }}
-//               />
-//             </div>
-//             <h2
-//               className="font-cormorant italic font-light text-white leading-none"
-//               style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)" }}
-//             >
-//               Gallery
-//             </h2>
-//             <div className="flex items-center gap-3 mt-5">
-//               <div
-//                 className="h-px w-10"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to right, transparent, rgba(212,175,55,0.4))",
-//                 }}
-//               />
-//               <div
-//                 className="w-1 h-1 rotate-45"
-//                 style={{ background: "rgba(212,175,55,0.5)" }}
-//               />
-//               <p className="font-cormorant italic text-white/30 text-base tracking-widest">
-//                 Oluwatosin &amp; Jesutomi
+//           {!isUnlocked && (
+//             <div className="mt-20 p-12 border border-yellow-500/20 bg-yellow-500/5 text-center">
+//               <h3 className="font-cormorant italic text-3xl text-white mb-4">
+//                 The Rest of Our Story...
+//               </h3>
+//               <p className="font-jost text-white/40 text-sm tracking-widest uppercase">
+//                 Access to the Full Program & Details unlocks Saturday Morning
 //               </p>
-//               <div
-//                 className="w-1 h-1 rotate-45"
-//                 style={{ background: "rgba(212,175,55,0.5)" }}
-//               />
-//               <div
-//                 className="h-px w-10"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to left, transparent, rgba(212,175,55,0.4))",
-//                 }}
-//               />
 //             </div>
-//           </div>
-
-//           {/* Grid */}
-//           <div
-//             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
-//             style={{ gridAutoRows: "200px" }}
-//           >
-//             {galleryItems.map((item, i) => (
-//               <GalleryItem
-//                 key={item.id}
-//                 item={item}
-//                 index={i}
-//                 onClick={openLightbox}
-//               />
-//             ))}
-//           </div>
-
-//           {/* Footer */}
-//           <div className="flex flex-col items-center mt-16 gap-3">
-//             <div className="flex items-center gap-5">
-//               <div
-//                 className="h-px w-20"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to right, transparent, rgba(212,175,55,0.4))",
-//                 }}
-//               />
-//               <div className="flex gap-2 items-center">
-//                 <div
-//                   className="w-1 h-1 rotate-45"
-//                   style={{ background: "rgba(212,175,55,0.4)" }}
-//                 />
-//                 <div
-//                   className="w-2 h-2 rotate-45"
-//                   style={{ background: "#D4AF37" }}
-//                 />
-//                 <div
-//                   className="w-1 h-1 rotate-45"
-//                   style={{ background: "rgba(212,175,55,0.4)" }}
-//                 />
-//               </div>
-//               <div
-//                 className="h-px w-20"
-//                 style={{
-//                   background:
-//                     "linear-gradient(to left, transparent, rgba(212,175,55,0.4))",
-//                 }}
-//               />
-//             </div>
-//             <p className="font-cormorant italic text-white/20 tracking-widest text-base">
-//               Every picture tells our story
-//             </p>
-//           </div>
+//           )}
 //         </div>
 //       </section>
 
@@ -1063,14 +185,19 @@
 //         <Lightbox
 //           items={galleryItems}
 //           activeIndex={lightboxIndex}
-//           onClose={closeLightbox}
-//           onPrev={prevPhoto}
-//           onNext={nextPhoto}
+//           onClose={() => setLightboxIndex(null)}
+//           onPrev={() =>
+//             setLightboxIndex(
+//               (i) => (i! - 1 + galleryItems.length) % galleryItems.length,
+//             )
+//           }
+//           onNext={() => setLightboxIndex((i) => (i! + 1) % galleryItems.length)}
 //         />
 //       )}
 //     </>
 //   );
 // }
+
 "use client";
 import { useRef, useEffect, useState, useCallback } from "react";
 
@@ -1089,563 +216,153 @@ const galleryItems = [
   { id: 12, fileId: "18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr", span: "normal" },
 ];
 
-// Try multiple URL formats in sequence
-function getDriveUrls(fileId: string) {
-  return [
-    `https://lh3.googleusercontent.com/d/${fileId}`,
-    `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`,
-    `https://drive.google.com/uc?export=view&id=${fileId}`,
-  ];
-}
+// SET UNLOCK DATE: Friday, March 20th, 2026 at 11:59 PM
+const UNLOCK_DATE = new Date("2026-03-20T23:59:00").getTime();
 
-function useInView(threshold = 0.1) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) setInView(true);
-      },
-      { threshold },
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-  return { ref, inView };
-}
-
-// Image component that tries multiple sources
-function DriveImage({
-  fileId,
-  className,
-  highRes = false,
-}: {
-  fileId: string;
-  className?: string;
-  highRes?: boolean;
-}) {
-  const urls = highRes
-    ? [
-        `https://lh3.googleusercontent.com/d/${fileId}=w1600`,
-        `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`,
-        `https://drive.google.com/uc?export=view&id=${fileId}`,
-      ]
-    : getDriveUrls(fileId);
-
-  const [urlIndex, setUrlIndex] = useState(0);
-  const [failed, setFailed] = useState(false);
-
-  const handleError = () => {
-    if (urlIndex < urls.length - 1) {
-      setUrlIndex((i) => i + 1);
-    } else {
-      setFailed(true);
-    }
-  };
-
-  if (failed) {
-    return (
-      <div
-        className={`${className} flex items-center justify-center`}
-        style={{ background: "rgba(107,63,160,0.15)" }}
-      >
-        <div className="flex flex-col items-center gap-2 opacity-30">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-            <rect
-              x="3"
-              y="3"
-              width="18"
-              height="18"
-              rx="2"
-              stroke="rgba(212,175,55,0.6)"
-              strokeWidth="1"
-            />
-            <circle cx="8.5" cy="8.5" r="1.5" fill="rgba(212,175,55,0.6)" />
-            <path
-              d="M3 16l5-5 4 4 3-3 6 6"
-              stroke="rgba(212,175,55,0.6)"
-              strokeWidth="1"
-              strokeLinecap="round"
-            />
-          </svg>
-        </div>
-      </div>
-    );
-  }
+function DriveImage({ fileId, className, highRes = false }: any) {
+  const url = highRes
+    ? `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`
+    : `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={urls[urlIndex]}
+      src={url}
       alt=""
-      className={className}
+      className={`${className} object-cover`}
       loading="lazy"
-      onError={handleError}
       referrerPolicy="no-referrer"
     />
   );
 }
 
-function GalleryItem({
-  item,
-  index,
-  onClick,
-}: {
-  item: (typeof galleryItems)[0];
-  index: number;
-  onClick: (index: number) => void;
-}) {
-  const { ref, inView } = useInView();
-  const heightClass =
-    item.span === "tall"
-      ? "row-span-2"
-      : item.span === "wide"
-        ? "col-span-2"
-        : "";
-
-  return (
-    <div
-      ref={ref}
-      className={`group relative overflow-hidden cursor-pointer ${heightClass}`}
-      style={{
-        opacity: inView ? 1 : 0,
-        transform: inView ? "scale(1)" : "scale(0.95)",
-        transition: `opacity 0.7s ease ${index * 80}ms, transform 0.7s ease ${index * 80}ms`,
-        minHeight: item.span === "tall" ? "420px" : "200px",
-        background: "rgba(107,63,160,0.08)",
-      }}
-      onClick={() => onClick(index)}
-    >
-      <DriveImage
-        fileId={item.fileId}
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-      />
-
-      {/* Hover overlay */}
-      <div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(5,2,12,0.7) 0%, rgba(5,2,12,0.1) 60%, transparent 100%)",
-        }}
-      />
-
-      {/* Corner brackets */}
-      <div className="absolute inset-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-        <div
-          className="absolute top-0 left-0 w-5 h-5"
-          style={{
-            borderTop: "1px solid rgba(212,175,55,0.8)",
-            borderLeft: "1px solid rgba(212,175,55,0.8)",
-          }}
-        />
-        <div
-          className="absolute top-0 right-0 w-5 h-5"
-          style={{
-            borderTop: "1px solid rgba(212,175,55,0.8)",
-            borderRight: "1px solid rgba(212,175,55,0.8)",
-          }}
-        />
-        <div
-          className="absolute bottom-0 left-0 w-5 h-5"
-          style={{
-            borderBottom: "1px solid rgba(212,175,55,0.8)",
-            borderLeft: "1px solid rgba(212,175,55,0.8)",
-          }}
-        />
-        <div
-          className="absolute bottom-0 right-0 w-5 h-5"
-          style={{
-            borderBottom: "1px solid rgba(212,175,55,0.8)",
-            borderRight: "1px solid rgba(212,175,55,0.8)",
-          }}
-        />
-      </div>
-
-      {/* Expand icon */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-          w-10 h-10 flex items-center justify-center
-          opacity-0 group-hover:opacity-100 scale-75 group-hover:scale-100
-          transition-all duration-300"
-        style={{ border: "1px solid rgba(212,175,55,0.6)" }}
-      >
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path
-            d="M1 1h4M1 1v4M13 1h-4M13 1v4M1 13h4M1 13v-4M13 13h-4M13 13v-4"
-            stroke="rgba(212,175,55,0.9)"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
-    </div>
-  );
-}
-
-function Lightbox({
-  items,
-  activeIndex,
-  onClose,
-  onPrev,
-  onNext,
-}: {
-  items: typeof galleryItems;
-  activeIndex: number;
-  onClose: () => void;
-  onPrev: () => void;
-  onNext: () => void;
-}) {
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowLeft") onPrev();
-      if (e.key === "ArrowRight") onNext();
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [onClose, onPrev, onNext]);
-
-  const item = items[activeIndex];
-
-  return (
-    <div
-      className="fixed inset-0 z-[200] flex items-center justify-center"
-      style={{ background: "rgba(5,2,12,0.96)", backdropFilter: "blur(12px)" }}
-      onClick={onClose}
-    >
-      <div
-        className="relative w-full max-w-4xl mx-6 overflow-hidden"
-        style={{
-          maxHeight: "85vh",
-          aspectRatio: "3/2",
-          background: "rgba(107,63,160,0.1)",
-        }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Corner brackets */}
-        <div className="absolute -inset-2 pointer-events-none z-10">
-          <div
-            className="absolute top-0 left-0 w-8 h-8"
-            style={{
-              borderTop: "1px solid rgba(212,175,55,0.5)",
-              borderLeft: "1px solid rgba(212,175,55,0.5)",
-            }}
-          />
-          <div
-            className="absolute top-0 right-0 w-8 h-8"
-            style={{
-              borderTop: "1px solid rgba(212,175,55,0.5)",
-              borderRight: "1px solid rgba(212,175,55,0.5)",
-            }}
-          />
-          <div
-            className="absolute bottom-0 left-0 w-8 h-8"
-            style={{
-              borderBottom: "1px solid rgba(212,175,55,0.5)",
-              borderLeft: "1px solid rgba(212,175,55,0.5)",
-            }}
-          />
-          <div
-            className="absolute bottom-0 right-0 w-8 h-8"
-            style={{
-              borderBottom: "1px solid rgba(212,175,55,0.5)",
-              borderRight: "1px solid rgba(212,175,55,0.5)",
-            }}
-          />
-        </div>
-
-        <DriveImage
-          fileId={item.fileId}
-          highRes
-          className="w-full h-full object-cover"
-        />
-
-        {/* Counter */}
-        <div
-          className="absolute bottom-0 left-0 right-0 p-4 z-10"
-          style={{
-            background:
-              "linear-gradient(to top, rgba(5,2,12,0.8), transparent)",
-          }}
-        >
-          <p
-            className="font-jost text-[0.55rem] tracking-[0.3em] uppercase"
-            style={{ color: "rgba(212,175,55,0.5)" }}
-          >
-            {activeIndex + 1} / {items.length}
-          </p>
-        </div>
-      </div>
-
-      {/* Prev */}
-      <button
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center
-          transition-all duration-300 hover:scale-110 border-none outline-none cursor-pointer"
-        style={{
-          background: "rgba(212,175,55,0.1)",
-          border: "1px solid rgba(212,175,55,0.2)",
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-          onPrev();
-        }}
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path
-            d="M10 3L5 8l5 5"
-            stroke="rgba(212,175,55,0.8)"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-
-      {/* Next */}
-      <button
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-11 h-11 flex items-center justify-center
-          transition-all duration-300 hover:scale-110 border-none outline-none cursor-pointer"
-        style={{
-          background: "rgba(212,175,55,0.1)",
-          border: "1px solid rgba(212,175,55,0.2)",
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-          onNext();
-        }}
-      >
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-          <path
-            d="M6 3l5 5-5 5"
-            stroke="rgba(212,175,55,0.8)"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </button>
-
-      {/* Close */}
-      <button
-        className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center
-          transition-all duration-300 hover:scale-110 border-none outline-none cursor-pointer"
-        style={{
-          background: "rgba(255,255,255,0.05)",
-          border: "1px solid rgba(255,255,255,0.1)",
-        }}
-        onClick={onClose}
-      >
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path
-            d="M1 1l12 12M13 1L1 13"
-            stroke="rgba(255,255,255,0.6)"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </button>
-    </div>
-  );
-}
-
 export default function Gallery() {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const { ref: headerRef, inView: headerIn } = useInView(0.3);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const openLightbox = useCallback(
-    (index: number) => setLightboxIndex(index),
-    [],
-  );
-  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
-  const prevPhoto = useCallback(
-    () =>
-      setLightboxIndex((i) =>
-        i !== null ? (i - 1 + galleryItems.length) % galleryItems.length : null,
-      ),
-    [],
-  );
-  const nextPhoto = useCallback(
-    () =>
-      setLightboxIndex((i) =>
-        i !== null ? (i + 1) % galleryItems.length : null,
-      ),
-    [],
-  );
-
+  // Time Lock Logic
   useEffect(() => {
-    document.body.style.overflow = lightboxIndex !== null ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [lightboxIndex]);
+    const checkTime = () => setIsUnlocked(Date.now() > UNLOCK_DATE);
+    checkTime();
+    const timer = setInterval(checkTime, 10000);
+    return () => clearInterval(timer);
+  }, []);
+
+  // Slideshow Autoplay Logic
+  useEffect(() => {
+    let interval: any;
+    if (isPlaying && lightboxIndex !== null) {
+      interval = setInterval(() => {
+        setLightboxIndex((prev) => (prev! + 1) % galleryItems.length);
+      }, 3000);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, lightboxIndex]);
+
+  const nextPhoto = () =>
+    setLightboxIndex((i) => (i! + 1) % galleryItems.length);
+  const prevPhoto = () =>
+    setLightboxIndex(
+      (i) => (i! - 1 + galleryItems.length) % galleryItems.length,
+    );
 
   return (
-    <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
-        .font-cormorant { font-family: 'Cormorant Garamond', serif; }
-        .font-jost      { font-family: 'Jost', sans-serif; }
-      `}</style>
+    <section id="gallery" className="py-24 bg-[#080310] px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="font-cormorant italic text-5xl text-white mb-4">
+            Gallery
+          </h2>
+          <div className="h-px w-20 bg-gold/30 mx-auto" />
+        </div>
 
-      <section
-        id="gallery"
-        className="relative py-28 px-6 overflow-hidden"
-        style={{
-          background:
-            "linear-gradient(to bottom, #080310 0%, #0a0514 50%, #080310 100%)",
-        }}
-      >
-        <div
-          className="absolute top-1/4 left-1/3 w-[500px] h-[500px] rounded-full pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(107,63,160,0.08) 0%, transparent 70%)",
-          }}
-        />
-        <div
-          className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] rounded-full pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(212,175,55,0.05) 0%, transparent 70%)",
-          }}
-        />
-
-        <div className="max-w-6xl mx-auto relative z-10">
-          {/* Header */}
-          <div
-            ref={headerRef}
-            className="flex flex-col items-center text-center mb-16"
-            style={{
-              opacity: headerIn ? 1 : 0,
-              transform: headerIn ? "translateY(0)" : "translateY(20px)",
-              transition: "opacity 0.9s ease, transform 0.9s ease",
-            }}
-          >
-            <p
-              className="font-jost text-[0.6rem] tracking-[0.5em] uppercase mb-4"
-              style={{ color: "rgba(212,175,55,0.7)" }}
+        {/* Full Rectangle Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 auto-rows-[180px] md:auto-rows-[240px]">
+          {galleryItems.map((item, i) => (
+            <div
+              key={item.id}
+              onClick={() => isUnlocked && setLightboxIndex(i)}
+              className={`relative overflow-hidden group bg-white/5 border border-white/5 
+                ${item.span === "tall" ? "row-span-2" : item.span === "wide" ? "col-span-2" : ""}
+                ${isUnlocked ? "cursor-pointer" : "cursor-default"}`}
             >
-              Our Story in Frames
-            </p>
-            <div className="flex items-center gap-4 mb-5">
-              <div
-                className="h-px w-16"
-                style={{
-                  background:
-                    "linear-gradient(to right, transparent, rgba(212,175,55,0.6))",
-                }}
-              />
-              <div
-                className="w-1.5 h-1.5 rotate-45"
-                style={{ background: "#D4AF37" }}
-              />
-              <div
-                className="h-px w-16"
-                style={{
-                  background:
-                    "linear-gradient(to left, transparent, rgba(212,175,55,0.6))",
-                }}
-              />
+              {isUnlocked ? (
+                <>
+                  <DriveImage
+                    fileId={item.fileId}
+                    className="w-full h-full transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+                </>
+              ) : (
+                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-30">
+                  <span className="text-2xl mb-2">🔒</span>
+                  <p className="font-jost text-[8px] tracking-[0.3em] uppercase">
+                    Locked until Friday
+                  </p>
+                </div>
+              )}
             </div>
-            <h2
-              className="font-cormorant italic font-light text-white leading-none"
-              style={{ fontSize: "clamp(2.8rem, 6vw, 5rem)" }}
-            >
-              Gallery
-            </h2>
-            <div className="flex items-center gap-3 mt-5">
-              <div
-                className="h-px w-10"
-                style={{
-                  background:
-                    "linear-gradient(to right, transparent, rgba(212,175,55,0.4))",
+          ))}
+        </div>
+      </div>
+
+      {/* FULL WIDTH LIGHTBOX */}
+      {lightboxIndex !== null && (
+        <div className="fixed inset-0 z-[500] bg-black/98 backdrop-blur-xl flex flex-col items-center justify-center p-4 md:p-10">
+          {/* Controls Bar */}
+          <div className="absolute top-6 w-full px-10 flex justify-between items-center z-[510]">
+            <p className="font-jost text-gold/50 text-[10px] tracking-widest uppercase">
+              {lightboxIndex + 1} / {galleryItems.length}
+            </p>
+
+            <div className="flex gap-8">
+              <button
+                onClick={() => setIsPlaying(!isPlaying)}
+                className={`font-jost text-[10px] tracking-[0.2em] uppercase px-6 py-2 border transition-all
+                  ${isPlaying ? "bg-gold text-black border-gold" : "text-gold border-gold/30 hover:border-gold"}`}
+              >
+                {isPlaying ? "Pause Slideshow ■" : "Play Slideshow ▶"}
+              </button>
+              <button
+                onClick={() => {
+                  setLightboxIndex(null);
+                  setIsPlaying(false);
                 }}
-              />
-              <div
-                className="w-1 h-1 rotate-45"
-                style={{ background: "rgba(212,175,55,0.5)" }}
-              />
-              <p className="font-cormorant italic text-white/30 text-base tracking-widest">
-                Oluwatosin &amp; Jesutomi
-              </p>
-              <div
-                className="w-1 h-1 rotate-45"
-                style={{ background: "rgba(212,175,55,0.5)" }}
-              />
-              <div
-                className="h-px w-10"
-                style={{
-                  background:
-                    "linear-gradient(to left, transparent, rgba(212,175,55,0.4))",
-                }}
-              />
+                className="text-white/60 hover:text-white text-xl"
+              >
+                ✕
+              </button>
             </div>
           </div>
 
-          {/* Grid */}
+          {/* Main Image View */}
           <div
-            className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"
-            style={{ gridAutoRows: "200px" }}
+            className="relative w-full max-w-7xl h-full flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
           >
-            {galleryItems.map((item, i) => (
-              <GalleryItem
-                key={item.id}
-                item={item}
-                index={i}
-                onClick={openLightbox}
-              />
-            ))}
-          </div>
+            <DriveImage
+              fileId={galleryItems[lightboxIndex].fileId}
+              highRes
+              className="max-h-[85vh] w-auto object-contain shadow-[0_0_50px_rgba(0,0,0,0.5)] transition-opacity duration-500"
+            />
 
-          {/* Footer */}
-          <div className="flex flex-col items-center mt-16 gap-3">
-            <div className="flex items-center gap-5">
-              <div
-                className="h-px w-20"
-                style={{
-                  background:
-                    "linear-gradient(to right, transparent, rgba(212,175,55,0.4))",
-                }}
-              />
-              <div className="flex gap-2 items-center">
-                <div
-                  className="w-1 h-1 rotate-45"
-                  style={{ background: "rgba(212,175,55,0.4)" }}
-                />
-                <div
-                  className="w-2 h-2 rotate-45"
-                  style={{ background: "#D4AF37" }}
-                />
-                <div
-                  className="w-1 h-1 rotate-45"
-                  style={{ background: "rgba(212,175,55,0.4)" }}
-                />
-              </div>
-              <div
-                className="h-px w-20"
-                style={{
-                  background:
-                    "linear-gradient(to left, transparent, rgba(212,175,55,0.4))",
-                }}
-              />
-            </div>
-            <p className="font-cormorant italic text-white/20 tracking-widest text-base">
-              Every picture tells our story
-            </p>
+            {/* Nav Arrows */}
+            <button
+              onClick={prevPhoto}
+              className="absolute left-0 md:-left-12 p-6 text-white/20 hover:text-gold text-5xl transition-colors"
+            >
+              ‹
+            </button>
+            <button
+              onClick={nextPhoto}
+              className="absolute right-0 md:-right-12 p-6 text-white/20 hover:text-gold text-5xl transition-colors"
+            >
+              ›
+            </button>
           </div>
         </div>
-      </section>
-
-      {lightboxIndex !== null && (
-        <Lightbox
-          items={galleryItems}
-          activeIndex={lightboxIndex}
-          onClose={closeLightbox}
-          onPrev={prevPhoto}
-          onNext={nextPhoto}
-        />
       )}
-    </>
+    </section>
   );
 }
