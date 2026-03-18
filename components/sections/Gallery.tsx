@@ -97,37 +97,24 @@
 //     </section>
 //   );
 // }
+
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
 
 const galleryItems = [
-  { id: 1, fileId: "1449qTzugPLD2a2bsc8WpGv_WczsGzSrB", span: "tall" },
-  { id: 2, fileId: "1x14EM0EUy_QE5Ef6NjKb18WiZV3sg9AM", span: "normal" },
-  { id: 3, fileId: "18kd742EhS3teubo4Rrj0Pu22M1vwyBjc", span: "normal" },
-  { id: 4, fileId: "1Rgo2sI5Ri3LcdDxuwOWZ7dAWi8CgPJ6H", span: "wide-tall" },
-  { id: 5, fileId: "18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr", span: "normal" },
+  { id: 1, fileId: "1LSsrUFIcQHzkiHq07WzWMBzfo9PvAWQi", span: "tall" },
+  { id: 2, fileId: "1cSF6oZhxSsIsEijCt8vwcIq9Ysb1YCkj", span: "normal" },
+  { id: 3, fileId: "1x14EM0EUy_QE5Ef6NjKb18WiZV3sg9AM", span: "normal" },
+  { id: 4, fileId: "1BVUVh2JEC88zNjM1c9CU65E9IEPpZStw", span: "wide-tall" },
+  { id: 5, fileId: "1uz52akHfUydUxV8MdZTy8tbDdfsWYpXF", span: "tall" },
   { id: 6, fileId: "1HwMl0RET8DGYJqODx-1o6FvZrV1KaDs_", span: "tall" },
-  { id: 7, fileId: "189xxOfK3VDGDw1i-sug4RQytkjHfO9FY", span: "normal" },
-  { id: 8, fileId: "1iGY5OK5QSV6nVBgPw9sqX2c1PZquKbIZ", span: "normal" },
-  { id: 9, fileId: "1cvU8FzRmILKECFl2Wt3VzMCUHqtsnobO", span: "wide" },
-  { id: 10, fileId: "1qVaS0oibJI8QjSVp70VC8jIbKYKE7GCP", span: "normal" },
-  { id: 11, fileId: "1TCjrqtDFjfIJ4sVT3yOz-P09QCzKJrX9", span: "tall" },
-  { id: 12, fileId: "18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr", span: "normal" },
-  { id: 13, fileId: "1lhNMwgs9-2VMXYReguYouGFsRybW8npC", span: "normal" },
-  { id: 14, fileId: "1n9J0ELnzoRr4ZuspSNUUCxjEyoVUNLgn", span: "normal" },
-  { id: 15, fileId: "18kd742EhS3teubo4Rrj0Pu22M1vwyBjc", span: "wide" },
+  { id: 7, fileId: "10dccrRdEL7VLSWB78iAohSTGbrRYh48O", span: "normal" },
+  { id: 8, fileId: "1k4JR2lovlKbYZwcR0TagOLNR_LkBCo_1", span: "wide-tall" },
 ];
 
 const objectPositionMap: Record<number, string> = {
-  6: "top",
-  11: "top",
   1: "top",
-  7: "top",
-  8: "top",
-  13: "top",
-  14: "top",
-  4: "center", // black dress lady — full height now
-  9: "50% 30%", // pink couple — shift up to show couple properly
+  6: "top",
 };
 
 const SLIDESHOW_INTERVAL = 3000;
