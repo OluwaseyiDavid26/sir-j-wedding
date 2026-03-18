@@ -669,8 +669,206 @@
 //   );
 // }
 
+// "use client";
+// import { useEffect, useState } from "react";
+
+// const galleryItems = [
+//   { id: 1, fileId: "1449qTzugPLD2a2bsc8WpGv_WczsGzSrB", span: "tall" },
+//   { id: 2, fileId: "1x14EM0EUy_QE5Ef6NjKb18WiZV3sg9AM", span: "normal" },
+//   { id: 3, fileId: "18kd742EhS3teubo4Rrj0Pu22M1vwyBjc", span: "normal" },
+//   { id: 4, fileId: "1Rgo2sI5Ri3LcdDxuwOWZ7dAWi8CgPJ6H", span: "wide" },
+//   { id: 5, fileId: "18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr", span: "normal" },
+//   { id: 6, fileId: "1HwMl0RET8DGYJqODx-1o6FvZrV1KaDs_", span: "tall" },
+//   { id: 7, fileId: "189xxOfK3VDGDw1i-sug4RQytkjHfO9FY", span: "normal" },
+//   { id: 8, fileId: "1iGY5OK5QSV6nVBgPw9sqX2c1PZquKbIZ", span: "normal" },
+//   { id: 9, fileId: "1cvU8FzRmILKECFl2Wt3VzMCUHqtsnobO", span: "wide" },
+//   { id: 10, fileId: "1qVaS0oibJI8QjSVp70VC8jIbKYKE7GCP", span: "normal" },
+//   { id: 11, fileId: "1TCjrqtDFjfIJ4sVT3yOz-P09QCzKJrX9", span: "tall" },
+//   { id: 12, fileId: "18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr", span: "normal" },
+//   { id: 13, fileId: "1lhNMwgs9-2VMXYReguYouGFsRybW8npC", span: "normal" },
+//   { id: 14, fileId: "1n9J0ELnzoRr4ZuspSNUUCxjEyoVUNLgn", span: "normal" },
+//   { id: 15, fileId: "18kd742EhS3teubo4Rrj0Pu22M1vwyBjc", span: "wide" },
+// ];
+
+// // Saturday, March 21st, 2026 at 00:00:00
+// const UNLOCK_DATE = new Date("2026-03-21T00:00:00").getTime();
+
+// function DriveImage({ fileId, className, highRes = false }: any) {
+//   const url = highRes
+//     ? `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`
+//     : `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
+
+//   return (
+//     <img
+//       src={url}
+//       alt="O&J Wedding"
+//       className={`${className} block object-cover w-full h-full`}
+//       loading="lazy"
+//       referrerPolicy="no-referrer"
+//     />
+//   );
+// }
+
+// export default function Gallery() {
+//   const [isUnlocked, setIsUnlocked] = useState(false);
+//   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+//   useEffect(() => {
+//     const checkTime = () => setIsUnlocked(Date.now() >= UNLOCK_DATE);
+//     checkTime();
+//     const timer = setInterval(checkTime, 1000);
+//     return () => clearInterval(timer);
+//   }, []);
+
+//   return (
+//     <section id="gallery" className="py-24 bg-[#080310]">
+//       <div className="max-w-7xl mx-auto px-4">
+//         <div className="text-center mb-16">
+//           <h2 className="font-cormorant italic text-5xl text-white mb-4">
+//             Our Moments
+//           </h2>
+//           <div className="h-px w-24 bg-[#D4AF37] mx-auto opacity-40" />
+//           {!isUnlocked && (
+//             <p className="mt-6 font-jost text-[#D4AF37] text-[10px] tracking-[0.4em] uppercase">
+//               Revealing Saturday 00:00
+//             </p>
+//           )}
+//         </div>
+
+//         <div className="grid grid-cols-2 md:grid-cols-4 gap-0 auto-rows-[220px] md:auto-rows-[300px] overflow-hidden border border-white/5 shadow-2xl">
+//           {galleryItems.map((item, i) => (
+//             <div
+//               key={item.id}
+//               onClick={() => isUnlocked && setLightboxIndex(i)}
+//               className={`relative overflow-hidden group border-[0.5px] border-white/10
+//                 ${item.span === "tall" ? "row-span-2" : ""}
+//                 ${item.span === "wide" ? "col-span-2" : ""}
+//                 ${isUnlocked ? "cursor-pointer" : "cursor-wait"}`}
+//             >
+//               {isUnlocked ? (
+//                 <>
+//                   <DriveImage
+//                     fileId={item.fileId}
+//                     className="transition-transform duration-1000 group-hover:scale-105"
+//                   />
+//                   <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-700" />
+//                 </>
+//               ) : (
+//                 /* LOCKED STATE - Sleek dark placeholder */
+//                 <div className="w-full h-full bg-[#120a1f] flex flex-col items-center justify-center p-4">
+//                   <span className="text-white/10 text-4xl mb-2">🔒</span>
+//                   <div className="w-8 h-[1px] bg-[#D4AF37]/20" />
+//                 </div>
+//               )}
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+
+//       {/* Lightbox remains hidden unless unlocked */}
+//       {isUnlocked && lightboxIndex !== null && (
+//         <div
+//           className="fixed inset-0 z-[1000] bg-black/98 backdrop-blur-2xl flex items-center justify-center p-4"
+//           onClick={() => setLightboxIndex(null)}
+//         >
+//           <DriveImage
+//             fileId={galleryItems[lightboxIndex].fileId}
+//             highRes
+//             className="max-h-[85vh] w-auto object-contain"
+//           />
+//           <button className="absolute top-8 right-12 text-white/40 text-3xl font-light">
+//             ✕
+//           </button>
+//         </div>
+//       )}
+//     </section>
+//   );
+// }
+
+// "use client";
+// import { useState } from "react";
+
+// const galleryItems = [
+//   { id: 1, fileId: "1449qTzugPLD2a2bsc8WpGv_WczsGzSrB", span: "tall" },
+//   { id: 2, fileId: "1x14EM0EUy_QE5Ef6NjKb18WiZV3sg9AM", span: "normal" },
+//   { id: 3, fileId: "18kd742EhS3teubo4Rrj0Pu22M1vwyBjc", span: "normal" },
+//   { id: 4, fileId: "1Rgo2sI5Ri3LcdDxuwOWZ7dAWi8CgPJ6H", span: "wide" },
+//   { id: 5, fileId: "18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr", span: "normal" },
+//   { id: 6, fileId: "1HwMl0RET8DGYJqODx-1o6FvZrV1KaDs_", span: "tall" },
+//   { id: 7, fileId: "189xxOfK3VDGDw1i-sug4RQytkjHfO9FY", span: "normal" },
+//   { id: 8, fileId: "1iGY5OK5QSV6nVBgPw9sqX2c1PZquKbIZ", span: "normal" },
+//   { id: 9, fileId: "1cvU8FzRmILKECFl2Wt3VzMCUHqtsnobO", span: "wide" },
+//   { id: 10, fileId: "1qVaS0oibJI8QjSVp70VC8jIbKYKE7GCP", span: "normal" },
+//   { id: 11, fileId: "1TCjrqtDFjfIJ4sVT3yOz-P09QCzKJrX9", span: "tall" }, // New replacement image
+//   { id: 12, fileId: "18N0Hi2DRSlljNdTswGj0qYEi_x3kARKr", span: "normal" },
+//   { id: 13, fileId: "1lhNMwgs9-2VMXYReguYouGFsRybW8npC", span: "normal" }, // Added
+//   { id: 14, fileId: "1n9J0ELnzoRr4ZuspSNUUCxjEyoVUNLgn", span: "normal" }, // Added
+//   { id: 15, fileId: "18kd742EhS3teubo4Rrj0Pu22M1vwyBjc", span: "wide" }, // Added to fill the bottom
+// ];
+
+// function DriveImage({ fileId, className, highRes = false }: any) {
+//   const url = `https://drive.google.com/thumbnail?id=${fileId}&sz=${highRes ? "w1600" : "w800"}`;
+//   return (
+//     <img
+//       src={url}
+//       alt=""
+//       className={`${className} block object-cover w-full h-full`}
+//       loading="lazy"
+//       referrerPolicy="no-referrer"
+//     />
+//   );
+// }
+
+// export default function Gallery() {
+//   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+//   return (
+//     <section id="gallery" className="py-24 bg-[#080310]">
+//       <div className="max-w-7xl mx-auto px-4">
+//         <div className="text-center mb-16">
+//           <h2 className="font-cormorant italic text-5xl text-white mb-4">
+//             Our Moments
+//           </h2>
+//           <div className="h-px w-24 bg-[#D4AF37] mx-auto opacity-40" />
+//         </div>
+
+//         <div className="grid grid-cols-2 md:grid-cols-4 gap-0 auto-rows-[200px] md:auto-rows-[300px] overflow-hidden border border-white/5">
+//           {galleryItems.map((item, i) => (
+//             <div
+//               key={item.id}
+//               onClick={() => setLightboxIndex(i)}
+//               className={`relative overflow-hidden group cursor-pointer border-[0.5px] border-white/10
+//                 ${item.span === "tall" ? "row-span-2" : ""}
+//                 ${item.span === "wide" ? "col-span-2" : ""}`}
+//             >
+//               <DriveImage
+//                 fileId={item.fileId}
+//                 className="transition-transform duration-1000 group-hover:scale-105"
+//               />
+//               <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-700" />
+//             </div>
+//           ))}
+//         </div>
+//       </div>
+
+//       {lightboxIndex !== null && (
+//         <div
+//           className="fixed inset-0 z-[1000] bg-black/98 backdrop-blur-2xl flex items-center justify-center p-4"
+//           onClick={() => setLightboxIndex(null)}
+//         >
+//           <DriveImage
+//             fileId={galleryItems[lightboxIndex].fileId}
+//             highRes
+//             className="max-h-[85vh] w-auto object-contain"
+//           />
+//         </div>
+//       )}
+//     </section>
+//   );
+// }
+
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const galleryItems = [
   { id: 1, fileId: "1449qTzugPLD2a2bsc8WpGv_WczsGzSrB", span: "tall" },
@@ -690,18 +888,29 @@ const galleryItems = [
   { id: 15, fileId: "18kd742EhS3teubo4Rrj0Pu22M1vwyBjc", span: "wide" },
 ];
 
-// Saturday, March 21st, 2026 at 00:00:00
-const UNLOCK_DATE = new Date("2026-03-21T00:00:00").getTime();
+// Per-item object position overrides — add any id here to control crop
+const objectPositionMap: Record<number, string> = {
+  6: "top", // grey suit couple — show faces
+  11: "top", // tall item — show faces
+  1: "top",
+  7: "top",
+  8: "top",
+  13: "top",
+  14: "top",
+};
 
-function DriveImage({ fileId, className, highRes = false }: any) {
-  const url = highRes
-    ? `https://drive.google.com/thumbnail?id=${fileId}&sz=w1600`
-    : `https://drive.google.com/thumbnail?id=${fileId}&sz=w800`;
-
+function DriveImage({
+  fileId,
+  className,
+  highRes = false,
+  objectPosition = "center",
+}: any) {
+  const url = `https://drive.google.com/thumbnail?id=${fileId}&sz=${highRes ? "w1600" : "w800"}`;
   return (
     <img
       src={url}
-      alt="O&J Wedding"
+      alt=""
+      style={{ objectPosition }}
       className={`${className} block object-cover w-full h-full`}
       loading="lazy"
       referrerPolicy="no-referrer"
@@ -710,15 +919,7 @@ function DriveImage({ fileId, className, highRes = false }: any) {
 }
 
 export default function Gallery() {
-  const [isUnlocked, setIsUnlocked] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
-  useEffect(() => {
-    const checkTime = () => setIsUnlocked(Date.now() >= UNLOCK_DATE);
-    checkTime();
-    const timer = setInterval(checkTime, 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   return (
     <section id="gallery" className="py-24 bg-[#080310]">
@@ -728,45 +929,29 @@ export default function Gallery() {
             Our Moments
           </h2>
           <div className="h-px w-24 bg-[#D4AF37] mx-auto opacity-40" />
-          {!isUnlocked && (
-            <p className="mt-6 font-jost text-[#D4AF37] text-[10px] tracking-[0.4em] uppercase">
-              Revealing Saturday 00:00
-            </p>
-          )}
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 auto-rows-[220px] md:auto-rows-[300px] overflow-hidden border border-white/5 shadow-2xl">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-0 auto-rows-[200px] md:auto-rows-[300px] overflow-hidden border border-white/5">
           {galleryItems.map((item, i) => (
             <div
               key={item.id}
-              onClick={() => isUnlocked && setLightboxIndex(i)}
-              className={`relative overflow-hidden group border-[0.5px] border-white/10
+              onClick={() => setLightboxIndex(i)}
+              className={`relative overflow-hidden group cursor-pointer border-[0.5px] border-white/10
                 ${item.span === "tall" ? "row-span-2" : ""}
-                ${item.span === "wide" ? "col-span-2" : ""}
-                ${isUnlocked ? "cursor-pointer" : "cursor-wait"}`}
+                ${item.span === "wide" ? "col-span-2" : ""}`}
             >
-              {isUnlocked ? (
-                <>
-                  <DriveImage
-                    fileId={item.fileId}
-                    className="transition-transform duration-1000 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-700" />
-                </>
-              ) : (
-                /* LOCKED STATE - Sleek dark placeholder */
-                <div className="w-full h-full bg-[#120a1f] flex flex-col items-center justify-center p-4">
-                  <span className="text-white/10 text-4xl mb-2">🔒</span>
-                  <div className="w-8 h-[1px] bg-[#D4AF37]/20" />
-                </div>
-              )}
+              <DriveImage
+                fileId={item.fileId}
+                objectPosition={objectPositionMap[item.id] ?? "center"}
+                className="transition-transform duration-1000 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-all duration-700" />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Lightbox remains hidden unless unlocked */}
-      {isUnlocked && lightboxIndex !== null && (
+      {lightboxIndex !== null && (
         <div
           className="fixed inset-0 z-[1000] bg-black/98 backdrop-blur-2xl flex items-center justify-center p-4"
           onClick={() => setLightboxIndex(null)}
@@ -776,9 +961,6 @@ export default function Gallery() {
             highRes
             className="max-h-[85vh] w-auto object-contain"
           />
-          <button className="absolute top-8 right-12 text-white/40 text-3xl font-light">
-            ✕
-          </button>
         </div>
       )}
     </section>
