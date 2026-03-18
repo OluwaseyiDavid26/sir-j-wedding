@@ -305,7 +305,7 @@ export default function Guestbook() {
                 Your Message
               </label>
               <textarea
-                placeholder="Write something beautiful for the couple..."
+                placeholder="Write something beautiful for the couple."
                 className="w-full bg-transparent border-b border-white/15 pb-3 text-white placeholder:text-white/20 focus:border-[#D4AF37] outline-none font-jost text-sm transition-all duration-300 resize-none"
                 rows={4}
                 value={message}
