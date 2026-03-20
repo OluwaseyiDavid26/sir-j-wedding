@@ -41,6 +41,34 @@
 //           text-shadow: 0 2px 20px rgba(0,0,0,0.5), 0 0 60px rgba(0,0,0,0.3);
 //         }
 
+//         /* Color of the Day Badge Styling */
+//         .color-badge {
+//           display: inline-flex;
+//           align-items: center;
+//           gap: 12px;
+//           background: rgba(255, 255, 255, 0.05);
+//           backdrop-filter: blur(8px);
+//           border: 1px solid rgba(212, 175, 55, 0.3);
+//           padding: 6px 16px;
+//           border-radius: 100px;
+//           margin-top: 10px;
+//         }
+
+//         .swatch-pair {
+//           display: flex;
+//           align-items: center;
+//         }
+
+//         .swatch {
+//           width: 12px;
+//           height: 12px;
+//           border-radius: 50%;
+//           border: 1px solid rgba(255,255,255,0.5);
+//         }
+
+//         .swatch.lavender { background: #E6E6FA; box-shadow: 0 0 10px rgba(230, 230, 250, 0.4); }
+//         .swatch.gold { background: #D4AF37; margin-left: -5px; box-shadow: 0 0 10px rgba(212, 175, 55, 0.4); }
+
 //         .hero-btn-outline {
 //           font-family: 'Jost', sans-serif;
 //           font-size: 0.65rem;
@@ -155,9 +183,9 @@
 //         ))}
 
 //         {/* Content Wrapper */}
-//         <div className="relative z-30 flex flex-col items-center text-center w-full max-w-4xl pt-40 md:pt-52 pb-20">
+//         <div className="relative z-30 flex flex-col items-center text-center w-full max-w-4xl pt-20 md:pt-32 pb-20">
 //           {/* BIG BOLD COUNTDOWN */}
-//           <div className="fade-up-1 mb-12">
+//           <div className="fade-up-1 mb-8">
 //             <p
 //               className="font-jost uppercase tracking-[0.5em] text-[#D4AF37] mb-6 opacity-90"
 //               style={{ fontSize: "clamp(0.6rem, 1.5vw, 0.75rem)" }}
@@ -168,7 +196,7 @@
 //           </div>
 
 //           {/* Names */}
-//           <div className="fade-up-2 flex flex-col items-center">
+//           <div className="fade-up-2 flex flex-col items-center pb-10">
 //             <h1
 //               className="font-cormorant italic font-light text-white name-shadow leading-[0.8]"
 //               style={{ fontSize: "clamp(3.5rem, 10vw, 7.5rem)" }}
@@ -193,7 +221,7 @@
 //           </div>
 
 //           {/* Details & CTAs */}
-//           <div className="fade-up-3 flex flex-col items-center gap-4 mt-12">
+//           <div className="fade-up-3 flex flex-col items-center gap-4 mt-8">
 //             <p
 //               className="font-jost tracking-[0.35em] uppercase font-bold text-white"
 //               style={{ fontSize: "clamp(0.75rem, 1.8vw, 0.95rem)" }}
@@ -210,6 +238,18 @@
 //             >
 //               First Baptist Church, Okedogbon, Owo, Ondo State
 //             </p>
+
+//             {/* COLOR OF THE DAY BADGE - MOVED HERE */}
+//             <div className="color-badge">
+//               <div className="swatch-pair">
+//                 <div className="swatch lavender"></div>
+//                 <div className="swatch gold"></div>
+//               </div>
+//               <span className="font-jost text-white uppercase tracking-[0.2em] text-[9px] font-semibold">
+//                 Color of the day:{" "}
+//                 <span className="text-[#D4AF37]">Lavender & Gold</span>
+//               </span>
+//             </div>
 
 //             <div className="flex gap-4 flex-wrap justify-center items-center mt-6">
 //               <a href="#program" className="hero-btn-outline">
@@ -325,7 +365,6 @@ export default function Hero() {
           text-shadow: 0 2px 20px rgba(0,0,0,0.5), 0 0 60px rgba(0,0,0,0.3);
         }
 
-        /* Color of the Day Badge Styling */
         .color-badge {
           display: inline-flex;
           align-items: center;
@@ -476,7 +515,8 @@ export default function Hero() {
             >
               Counting Down To The Big Day
             </p>
-            <CountdownTimer targetDate="2026-03-21T11:00:00" />
+            {/* 11:00 AM WAT = 10:00 AM UTC */}
+            <CountdownTimer targetDate="2026-03-21T10:00:00Z" />
           </div>
 
           {/* Names */}
@@ -523,7 +563,6 @@ export default function Hero() {
               First Baptist Church, Okedogbon, Owo, Ondo State
             </p>
 
-            {/* COLOR OF THE DAY BADGE - MOVED HERE */}
             <div className="color-badge">
               <div className="swatch-pair">
                 <div className="swatch lavender"></div>
